@@ -16,7 +16,7 @@ switchTask:
     mov %edx, 12(%eax)
     mov %esi, 16(%eax)
     mov %edi, 20(%eax)
-    mov 36(%esp), %ebx #E AX
+    mov 36(%esp), %ebx # EAX
     mov 40(%esp), %ecx # IP
     mov 20(%esp), %edx # ESP
     add $4, %edx       # Remove the return value ;)
