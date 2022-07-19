@@ -20,8 +20,8 @@ typedef struct Task {
 } Task;
  
 extern void initTasking();
-extern void kexec(void(*)());
-extern void createTask(Task*, void(*)(), uint32_t, uint32_t*);
+extern void kexec(void(*)(), uint32_t);
+extern void createTask(Task*, void(*)(), uint32_t, uint32_t*, , uint32_t);
  
 extern void yield(); // Switch task frontend
 extern void switchTask(Registers *old, Registers *new); // The function which actually switches
