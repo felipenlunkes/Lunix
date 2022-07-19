@@ -21,7 +21,7 @@ CFLAGS = -g -ffreestanding -Wall -Wextra -fno-exceptions -m32 -gdwarf-4 -Iinc/
 
 # First rule is run by default
 
-lunix.img: boot/bootsect.bin lunix.bin
+lunix.img: boot/LXboot.bin lunix.bin
 	cat $^ > lunix.img
 
 # '--oformat binary' deletes all symbols as a collateral, so we don't need
@@ -60,5 +60,5 @@ debug: lunix.bin kernel.elf
 	nasm $< -f bin -o $@
 
 clean:
-	rm -rf *.bin *.dis *.o lunix.bin *.elf
+	rm -rf *.bin *.dis *.o lunix.bin *.elf *.img
 	rm -rf kern/*.o boot/*.bin drivers/*/*.o boot/*.o arch/*/*.o libc/*.o

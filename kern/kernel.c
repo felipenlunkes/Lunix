@@ -10,10 +10,9 @@ void init_shell();
 
 void kernel_main() {
 
-    kprint("\nWelcome to Lunix kernel!\n");
-    kprint("Lunix kernel version ");
+    kprint("\nLunix kernel version ");
     kprint(LUNIX_VERSION);
-    kprint("\n");
+    kprint("\nCopyright (c) 2022 Felipe Miguel Nery Lunkes\n");
 
     config_x86();
     isr_install();

@@ -8,19 +8,19 @@ void init_LXmonitor(){
 
     kprint("\n\nWelcome to the Lunix kernel monitor\n");
 
-    lunix_shell();
+    lunix_monitor();
 
     yield();
 
 }
 
-void lunix_shell(char *input) {
+void lunix_monitor(char *input) {
 
     if (strcmp(input, "PANIC") == 0) {
 
         panic("the user forced a kernel panic. Reboot\n");
 
-    } else if (strcmp(input, "MALLOC") == 0) {
+    } else if (strcmp(input, "KMALLOC") == 0) {
 
         uint32_t phys_addr;
         uint32_t page = kmalloc(1000, 1, &phys_addr);
@@ -38,6 +38,15 @@ void lunix_shell(char *input) {
         kprint(phys_str);
         kprint("\n");
 
+    }
+
+    else if (strcmp(input, "HELP") == 0) {
+
+        kprint("\nThe kernel monitor allows you to:\n");
+        kprint("\n1: Test kernel functions");
+        kprint("\n2: Test the hardware response");
+        kprint("\nA lot is to come!\n\n");
+    
     }
 
     kprint("> ");

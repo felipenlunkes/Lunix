@@ -17,12 +17,12 @@ KERNEL_OFFSET equ 0x1000 ; The same one we used when linking the kernel
 
     jmp $ ; Never executed
 
-%include "boot/print.asm"
-%include "boot/print_hex.asm"
-%include "boot/disk.asm"
-%include "boot/gdt.asm"
-%include "boot/32bit_print.asm"
-%include "boot/switch_pm.asm"
+%include "boot/LXprint.asm"
+%include "boot/LXhex.asm"
+%include "boot/LXdisk.asm"
+%include "boot/LXgdt.asm"
+%include "boot/LXconsole.asm"
+%include "boot/LXpm.asm"
 
 [bits 16]
 
@@ -54,7 +54,7 @@ BEGIN_PM:
 
 
 BOOT_DRIVE db 0 ; It is a good idea to store it in memory because 'dl' may get overwritten
-MSG_REAL_MODE db "Lunix loader started", 0
+MSG_REAL_MODE db 10, 13, "Lunix loader v0.0.0.1", 0
 MSG_PROT_MODE db "We are now in 32-bit Protected Mode", 0
 MSG_LOAD_KERNEL db "Loading the Lunix kernel", 0
 MSG_RETURNED_KERNEL db "Returned from kernel. Error?", 0

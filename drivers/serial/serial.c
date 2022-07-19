@@ -3,7 +3,7 @@
 
 void init_COM1(){
 
-    kprint("\nInitializing serial ports (COM1)...");
+    kprint("\nInitializing serial ports (com1)...");
 
     extern initCOM1();
 

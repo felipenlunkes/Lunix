@@ -70,11 +70,9 @@ void kprint_backspace() {
 
 }
 
-
 /**********************************************************
  * Private kernel functions                               *
  **********************************************************/
-
 
 /**
  * Innermost print function for our kernel, directly accesses the video memory 
