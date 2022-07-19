@@ -1,9 +1,8 @@
 #include <Lunix/kernel/kernel.h>
 #include <Lunix/kernel/isr.h>
+#include <Lunix/kernel/thread.h>
 #include <stdint.h>
 
-#include "thread.h"
- 
 static Task *runningTask;
 static Task mainTask;
 static Task otherTask;

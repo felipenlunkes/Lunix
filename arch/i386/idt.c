@@ -1,4 +1,4 @@
-#include "type.h"
+#include <Lunix/type.h>
 
 #ifndef IDT_H
 #define IDT_H

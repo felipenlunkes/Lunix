@@ -1,4 +1,6 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -6,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Jul 19 04:43:57 2022
+# Make data base, printed on Tue Jul 19 05:04:45 2022
 
 # Variables
 
@@ -232,22 +234,22 @@ GDMSESSION = ubuntu-wayland
 # Directories
 
 # arch (device 2055, inode 1352283): 3 files, no impossibilities.
-# drivers/console (device 2055, inode 1351991): 4 files, no impossibilities.
-# . (device 2055, inode 1352244): 15 files, no impossibilities.
-# kern (device 2055, inode 1352299): 11 files, no impossibilities.
-# drivers/x86 (device 2055, inode 1575637): 4 files, no impossibilities.
-# drivers/serial (device 2055, inode 1575635): 6 files, no impossibilities.
-# drivers/parallel (device 2055, inode 1575636): 5 files, no impossibilities.
+# drivers/console (device 2055, inode 1351991): 3 files, no impossibilities.
+# . (device 2055, inode 1352244): 14 files, no impossibilities.
+# kern (device 2055, inode 1352299): 7 files, no impossibilities.
+# drivers/x86 (device 2055, inode 1575637): 3 files, no impossibilities.
+# drivers/serial (device 2055, inode 1575635): 5 files, no impossibilities.
+# drivers/parallel (device 2055, inode 1575636): 4 files, no impossibilities.
 # drivers (device 2055, inode 1352294): 7 files, no impossibilities.
-# arch/i386 (device 2055, inode 2110471): 18 files, no impossibilities.
-# drivers/keyboard (device 2055, inode 1575634): 5 files, no impossibilities.
-# libc (device 2055, inode 1352302): 9 files, no impossibilities.
+# arch/i386 (device 2055, inode 2110471): 10 files, no impossibilities.
+# drivers/keyboard (device 2055, inode 1575634): 4 files, no impossibilities.
+# libc (device 2055, inode 1352302): 7 files, no impossibilities.
 
-# 87 files, no impossibilities in 11 directories.
+# 67 files, no impossibilities in 11 directories.
 
 # Implicit Rules
 
-%.o: %.c kern/thread.h arch/i386/idt.h arch/i386/type.h libc/function.h libc/mem.h libc/string.h
+%.o: %.c kern/thread.h arch/i386/type.h libc/function.h libc/mem.h libc/string.h
 #  recipe to execute (from 'Makefile', line 51):
 	${CC} ${CFLAGS} -c $< -o $@
 
@@ -307,22 +309,20 @@ debug: lunix.bin kernel.elf
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 44):
+ 
 	qemu-system-i386 -s -fda lunix.img -d guest_errors,int &
 	${GDB} -ex "target remote localhost:1234" -ex "symbol-file kernel.elf"
 
 # Not a target:
 arch/i386/timer.o:
 #  Implicit rule search has not been done.
- 
-make: *** No rule to make target 'all'.  Stop.
-
 #  Modification time never checked.
 #  File has not been updated.
 
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-19 04:43:46.668077334
+#  Last modified 2022-07-19 05:02:39.052857227
 #  File has been updated.
 #  Successfully updated.
 
@@ -338,7 +338,7 @@ clean:
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 63):
 	rm -rf *.bin *.dis *.o lunix.bin *.elf
-	rm -rf kern/*.o boot/*.bin drivers/*/*.o boot/*.o cpu/*.o libc/*.o
+	rm -rf kern/*.o boot/*.bin drivers/*/*.o boot/*.o arch/*/*.o libc/*.o
 
 # Not a target:
 arch/i386/ports.o:
@@ -461,12 +461,12 @@ lunix.img: boot/bootsect.bin lunix.bin
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 114 / storage = 1189 B / avg = 10 B
-# current buf: size = 8162 B / used = 1189 B / count = 114 / avg = 10 B
+# strcache buffers: 1 (0) / strings = 93 / storage = 1007 B / avg = 10 B
+# current buf: size = 8162 B / used = 1007 B / count = 93 / avg = 10 B
 
-# strcache performance: lookups = 208 / hit rate = 45%
+# strcache performance: lookups = 187 / hit rate = 50%
 # hash-table stats:
-# Load=114/8192=1%, Rehash=0, Collisions=1/208=0%
-# Finished Make data base on Tue Jul 19 04:43:57 2022
+# Load=93/8192=1%, Rehash=0, Collisions=0/187=0%
+# Finished Make data base on Tue Jul 19 05:04:45 2022
 
  
