@@ -30,11 +30,6 @@ void initTasking() {
  
     createTask(&otherTask, kernel_thread, mainTask.regs.eflags, (uint32_t*)mainTask.regs.cr3);
 
-    mainTask.next = &otherTask;
-    otherTask.next = &mainTask;
- 
-    runningTask = &mainTask;
-
     yield();
 
 }
@@ -55,6 +50,11 @@ void createTask(Task *task, void (*main)(), uint32_t flags, uint32_t *pagedir) {
     task->regs.esp = kmalloc(1000, 1, &phys_addr);
     task->next = 0;
 
+    mainTask.next = &otherTask;
+    otherTask.next = &mainTask;
+ 
+    runningTask = &mainTask;
+ 
 }
  
 void yield() {
