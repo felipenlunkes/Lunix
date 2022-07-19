@@ -9,7 +9,11 @@ static void kernel_thread() {
     
     kprint("\nkernel_thread: PID 0 started");
 
-    init_LXmonitor();
+    kprint("\nStarting PID 1 (LX monitor)...");
+     
+    kecev(init_LXmonitor, 1);
+ 
+    yield();
 
 }
 
