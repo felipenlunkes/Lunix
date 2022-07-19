@@ -38,7 +38,7 @@ int LXget_userID(int tty){
 
 void LXset_user(int tty, char *name, int ID, int groupID){
 
-    kprint("\nLXset_user: user '");
+    kprint("\nLunix: user '");
     kprint(name);
     kprint("' logged in.\n");
 

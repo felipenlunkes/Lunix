@@ -64,6 +64,12 @@ void lunix_monitor(char *input) {
         kprint(userID);
     }
 
+    else if (strcmp(input, "CLEAR") == 0) {
+
+        clear_screen();
+        
+    }
+
     kprint("> ");
 
 }

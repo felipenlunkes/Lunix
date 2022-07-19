@@ -18,8 +18,8 @@ void kern_main() {
     init_COM1();
     init_Parallel();
 
-    //asm("int $2");
-    //asm("int $3");
+    // asm("int $2");
+    // asm("int $3");
 
     initTasking();
 
