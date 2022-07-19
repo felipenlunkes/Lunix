@@ -11,6 +11,9 @@ static void timer_callback(registers_t *regs) {
 }
 
 void init_timer(uint32_t freq) {
+
+    kprint("\nInitializing the timer...");
+    
     /* Install the function we just wrote */
     register_interrupt_handler(IRQ0, timer_callback);
 

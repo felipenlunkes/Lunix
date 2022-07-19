@@ -35,7 +35,7 @@ static void keyboard_callback(registers_t *regs) {
         kprint_backspace();
     } else if (scancode == ENTER) {
         kprint("\n");
-        user_input(key_buffer); /* kernel-controlled function */
+        lunix_shell(key_buffer); /* kernel-controlled function */
         key_buffer[0] = '\0';
     } else {
         char letter = sc_ascii[(int)scancode];

@@ -1,40 +1,28 @@
 #include "../cpu/isr.h"
 #include "../drivers/screen.h"
-#include "kernel.h"
 #include "../libc/string.h"
 #include "../libc/mem.h"
+#include "kernel.h"
+#include "version.h"
 #include <stdint.h>
 
+lunix_shell();
+
 void kernel_main() {
+
+    kprint("\nWelcome to Lunix kernel!\n");
+    kprint("Lunix kernel version ");
+    kprint(LUNIX_VERSION);
+    kprint("\n");
+
     isr_install();
     irq_install();
+    init_COM1();
+    init_Parallel();
 
-    asm("int $2");
-    asm("int $3");
+    //asm("int $2");
+    //asm("int $3");
 
-    kprint("Type something, it will go through the kernel\n"
-        "Type END to halt the CPU or PAGE to request a kmalloc()\n> ");
-}
+    init_shell();
 
-void user_input(char *input) {
-    if (strcmp(input, "END") == 0) {
-        kprint("Stopping the CPU. Bye!\n");
-        asm volatile("hlt");
-    } else if (strcmp(input, "PAGE") == 0) {
-        /* Lesson 22: Code to test kmalloc, the rest is unchanged */
-        uint32_t phys_addr;
-        uint32_t page = kmalloc(1000, 1, &phys_addr);
-        char page_str[16] = "";
-        hex_to_ascii(page, page_str);
-        char phys_str[16] = "";
-        hex_to_ascii(phys_addr, phys_str);
-        kprint("Page: ");
-        kprint(page_str);
-        kprint(", physical address: ");
-        kprint(phys_str);
-        kprint("\n");
-    }
-    kprint("You said: ");
-    kprint(input);
-    kprint("\n> ");
 }

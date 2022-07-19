@@ -1,16 +1,59 @@
 #include "isr.h"
-#include "idt.h"
 #include "../drivers/screen.h"
 #include "../drivers/keyboard.h"
 #include "../libc/string.h"
 #include "timer.h"
 #include "ports.h"
 
+#ifndef IDT_H
+#define IDT_H
+
+#include <stdint.h>
+
+/* Segment selectors */
+
+#define KERNEL_CS 0x08
+
+/* How every interrupt gate (handler) is defined */
+
+typedef struct {
+
+    uint16_t low_offset; /* Lower 16 bits of handler function address */
+    uint16_t sel; /* Kernel segment selector */
+    uint8_t always0;
+
+    /* First byte
+     * Bit 7: "Interrupt is present"
+     * Bits 6-5: Privilege level of caller (0=kernel..3=user)
+     * Bit 4: Set to 0 for interrupt gates
+     * Bits 3-0: bits 1110 = decimal 14 = "32 bit interrupt gate" */
+
+    uint8_t flags; 
+    uint16_t high_offset; /* Higher 16 bits of handler function address */
+
+} __attribute__((packed)) idt_gate_t ;
+
+/* A pointer to the array of interrupt handlers.
+ * Assembly instruction 'lidt' will read it */
+
+typedef struct {
+
+    uint16_t limit;
+    uint32_t base;
+
+} __attribute__((packed)) idt_register_t;
+
+#endif
+
 isr_t interrupt_handlers[256];
 
 /* Can't do this with a loop because we need the address
  * of the function names */
+
 void isr_install() {
+
+    kprint("\nInitializing the ISR...");
+
     set_idt_gate(0, (uint32_t)isr0);
     set_idt_gate(1, (uint32_t)isr1);
     set_idt_gate(2, (uint32_t)isr2);
@@ -45,6 +88,7 @@ void isr_install() {
     set_idt_gate(31, (uint32_t)isr31);
 
     // Remap the PIC
+
     port_byte_out(0x20, 0x11);
     port_byte_out(0xA0, 0x11);
     port_byte_out(0x21, 0x20);
@@ -57,6 +101,7 @@ void isr_install() {
     port_byte_out(0xA1, 0x0); 
 
     // Install the IRQs
+
     set_idt_gate(32, (uint32_t)irq0);
     set_idt_gate(33, (uint32_t)irq1);
     set_idt_gate(34, (uint32_t)irq2);
@@ -78,6 +123,7 @@ void isr_install() {
 }
 
 /* To print the message which defines every exception */
+
 char *exception_messages[] = {
     "Division By Zero",
     "Debug",
@@ -117,37 +163,60 @@ char *exception_messages[] = {
 };
 
 void isr_handler(registers_t *r) {
+
     kprint("received interrupt: ");
+
     char s[3];
+
     int_to_ascii(r->int_no, s);
+    
     kprint(s);
     kprint("\n");
     kprint(exception_messages[r->int_no]);
     kprint("\n");
+
 }
 
 void register_interrupt_handler(uint8_t n, isr_t handler) {
+
     interrupt_handlers[n] = handler;
+
 }
 
 void irq_handler(registers_t *r) {
+
     /* After every interrupt we need to send an EOI to the PICs
      * or they will not send another interrupt again */
+
     if (r->int_no >= 40) port_byte_out(0xA0, 0x20); /* slave */
+
     port_byte_out(0x20, 0x20); /* master */
 
     /* Handle the interrupt in a more modular way */
+
     if (interrupt_handlers[r->int_no] != 0) {
+
         isr_t handler = interrupt_handlers[r->int_no];
+
         handler(r);
+        
     }
 }
 
 void irq_install() {
+
+    kprint("\nInstalling the interrupt routines...");
+
     /* Enable interruptions */
+
     asm volatile("sti");
+
     /* IRQ0: timer */
+
     init_timer(50);
+
     /* IRQ1: keyboard */
+
     init_keyboard();
+
 }
