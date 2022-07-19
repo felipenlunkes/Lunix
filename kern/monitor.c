@@ -2,11 +2,18 @@
 #include "../libc/string.h"
 #include "../libc/mem.h"
 #include <Lunix/kernel/kernel.h>
+#include <Lunix/kernel/thread.h>
 #include <stdint.h>
 
 void init_LXmonitor(){
 
+int setUser=0;
+
     kprint("\n\nWelcome to the Lunix kernel monitor\n");
+
+    LXset_user(1, "root", 777, 1);
+
+    kprint("\n");
 
     lunix_monitor();
 
@@ -47,6 +54,14 @@ void lunix_monitor(char *input) {
         kprint("\n2: Test the hardware response");
         kprint("\nA lot is to come!\n\n");
     
+    }
+
+    else if (strcmp(input, "USER") == 0) {
+
+        int userID=LXget_userID(1);
+
+        kprint("\nUser ID: ");
+        kprint(userID);
     }
 
     kprint("> ");
