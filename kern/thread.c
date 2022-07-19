@@ -7,7 +7,7 @@ static Task *runningTask;
 static Task mainTask;
 static Task otherTask;
 
-void exec(void (*entry_task)()) {
+void kexec(void (*entry_task)()) {
 
     // Get EFLAGS and CR3
 
