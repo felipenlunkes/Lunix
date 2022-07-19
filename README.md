@@ -1,0 +1,1 @@
+The Lunix kernel was initially based in the tutorial found [here](https://github.com/cfenollosa/os-tutorial)
