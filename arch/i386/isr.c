@@ -1,4 +1,4 @@
-#include "isr.h"
+#include <Lunix/kernel/isr.h>
 #include <Lunix/console.h>
 #include <Lunix/keyboard.h>
 #include "../libc/string.h"

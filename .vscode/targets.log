@@ -6,14 +6,18 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Jul 19 02:32:25 2022
+# Make data base, printed on Tue Jul 19 04:43:57 2022
 
 # Variables
 
-# makefile (from 'Makefile', line 7)
+# makefile (from 'Makefile', line 10)
+SAS = ${S_SOURCES:.s=.o}
+# makefile (from 'Makefile', line 8)
 OBJ = ${C_SOURCES:.c=.o arch/i386/interrupt.o} 
 # environment
 GDK_BACKEND = x11
+# makefile (from 'Makefile', line 16)
+AS = = /usr/local/i386elfgcc/bin/i386-elf-as
 # environment
 LC_ALL = C
 # environment
@@ -58,7 +62,7 @@ XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.TPFLP1
 MAKEFLAGS = pqrR
 # makefile
 CURDIR := /home/felipe/Documentos/Lunix
-# makefile (from 'Makefile', line 8)
+# makefile (from 'Makefile', line 9)
 ASM = ${ASM_SOURCES:.asm=.o}
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
@@ -85,12 +89,12 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 175049
+VSCODE_PID = 178393
 # environment
 XDG_SESSION_TYPE = wayland
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
-# makefile (from 'Makefile', line 13)
+# makefile (from 'Makefile', line 15)
 GDB = /usr/local/i386elfgcc/bin/i386-elf-gdb
 # environment
 SESSION_MANAGER = local/felipe-550XBE-350XBE:@/tmp/.ICE-unix/2055,unix/felipe-550XBE-350XBE:/tmp/.ICE-unix/2055
@@ -114,8 +118,8 @@ SHELL = /bin/sh
 MAKECMDGOALS := all
 # environment
 XMODIFIERS = @im=ibus
-# makefile (from 'Makefile', line 3)
-HEADERS = $(wildcard kern/*.h drivers/*.h arch/i386/*.h libc/*.h)
+# makefile (from 'Makefile', line 4)
+HEADERS = $(wildcard kern/*.h drivers/*.h arch/*/*.h libc/*.h)
 # environment
 GJS_DEBUG_TOPICS = JS ERROR;JS LOG
 # environment
@@ -161,7 +165,7 @@ LOGNAME = felipe
 # environment
 GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
 # makefile
-.DEFAULT_GOAL := lunix.bin
+.DEFAULT_GOAL := lunix.img
 # environment
 SYSTEMD_EXEC_PID = 2073
 # environment
@@ -175,13 +179,15 @@ MAKE_VERSION := 4.3
 # environment
 MANAGERPID = 1953
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 175049
+GIO_LAUNCHED_DESKTOP_FILE_PID = 178393
 # environment
 _ = /usr/share/code/code
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
-# makefile (from 'Makefile', line 17)
+# makefile (from 'Makefile', line 20)
 CFLAGS = -g -ffreestanding -Wall -Wextra -fno-exceptions -m32 -gdwarf-4 -Iinc/
+# makefile (from 'Makefile', line 3)
+S_SOURCES = $(wildcard arch/*/*.s)
 # environment
 JOURNAL_STREAM = 8:32329
 # environment
@@ -203,21 +209,21 @@ IM_CONFIG_PHASE = 1
 # automatic
 <F = $(notdir $<)
 # makefile (from 'Makefile', line 1)
-C_SOURCES = $(wildcard kern/*.c drivers/*/*.c  arch/i386/*.c libc/*.c)
+C_SOURCES = $(wildcard kern/*.c drivers/*/*.c  arch/*/*.c libc/*.c)
 # default
 SUFFIXES := 
 # makefile (from 'Makefile', line 2)
-ASM_SOURCES = $(wildcard drivers/*/*.asm)
+ASM_SOURCES = $(wildcard drivers/*/*.asm arch/*/*.asm)
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
-# makefile (from 'Makefile', line 12)
+# makefile (from 'Makefile', line 14)
 CC = /usr/local/i386elfgcc/bin/i386-elf-gcc
 # environment
 XDG_MENU_PREFIX = gnome-
 # environment
 GDMSESSION = ubuntu-wayland
 # variable set hash-table stats:
-# Load=103/1024=10%, Rehash=0, Collisions=4/140=3%
+# Load=106/1024=10%, Rehash=0, Collisions=4/147=3%
 
 # Pattern-specific Variable Values
 
@@ -225,34 +231,39 @@ GDMSESSION = ubuntu-wayland
 
 # Directories
 
-# drivers/console (device 2055, inode 1351991): 3 files, no impossibilities.
-# . (device 2055, inode 1352244): 13 files, no impossibilities.
-# kern (device 2055, inode 1352299): 5 files, no impossibilities.
-# drivers/x86 (device 2055, inode 1575637): 3 files, no impossibilities.
-# drivers/serial (device 2055, inode 1575635): 5 files, no impossibilities.
-# drivers/parallel (device 2055, inode 1575636): 4 files, no impossibilities.
+# arch (device 2055, inode 1352283): 3 files, no impossibilities.
+# drivers/console (device 2055, inode 1351991): 4 files, no impossibilities.
+# . (device 2055, inode 1352244): 15 files, no impossibilities.
+# kern (device 2055, inode 1352299): 11 files, no impossibilities.
+# drivers/x86 (device 2055, inode 1575637): 4 files, no impossibilities.
+# drivers/serial (device 2055, inode 1575635): 6 files, no impossibilities.
+# drivers/parallel (device 2055, inode 1575636): 5 files, no impossibilities.
 # drivers (device 2055, inode 1352294): 7 files, no impossibilities.
-# arch/i386 (device 2055, inode 2110471): 10 files, no impossibilities.
-# drivers/keyboard (device 2055, inode 1575634): 4 files, no impossibilities.
-# libc (device 2055, inode 1352302): 7 files, no impossibilities.
+# arch/i386 (device 2055, inode 2110471): 18 files, no impossibilities.
+# drivers/keyboard (device 2055, inode 1575634): 5 files, no impossibilities.
+# libc (device 2055, inode 1352302): 9 files, no impossibilities.
 
-# 61 files, no impossibilities in 10 directories.
+# 87 files, no impossibilities in 11 directories.
 
 # Implicit Rules
 
-%.o: %.c arch/i386/idt.h arch/i386/isr.h arch/i386/type.h libc/function.h libc/mem.h libc/string.h
-#  recipe to execute (from 'Makefile', line 48):
+%.o: %.c kern/thread.h arch/i386/idt.h arch/i386/type.h libc/function.h libc/mem.h libc/string.h
+#  recipe to execute (from 'Makefile', line 51):
 	${CC} ${CFLAGS} -c $< -o $@
 
 %.o: %.asm
-#  recipe to execute (from 'Makefile', line 51):
+#  recipe to execute (from 'Makefile', line 54):
 	nasm $< -f elf -o $@
 
+%.o: %.s
+#  recipe to execute (from 'Makefile', line 57):
+	${CC} -c $< -o $@ 
+
 %.bin: %.asm
-#  recipe to execute (from 'Makefile', line 54):
+#  recipe to execute (from 'Makefile', line 60):
 	nasm $< -f bin -o $@
 
-# 3 implicit rules, 0 (0.0%) terminal.
+# 4 implicit rules, 0 (0.0%) terminal.
 # Files
 
 # Not a target:
@@ -279,34 +290,39 @@ drivers/x86/x86.o:
 #  Modification time never checked.
 #  File has not been updated.
 
-kernel.elf: boot/kernel_entry.o kern/kernel.o arch/i386/interrupt.o kern/panic.o arch/i386/interrupt.o kern/shell.o arch/i386/interrupt.o drivers/console/console.o arch/i386/interrupt.o drivers/keyboard/keyboard.o arch/i386/interrupt.o drivers/parallel/parallel.o arch/i386/interrupt.o drivers/serial/serial.o arch/i386/interrupt.o drivers/x86/x86.o arch/i386/interrupt.o arch/i386/idt.o arch/i386/interrupt.o arch/i386/isr.o arch/i386/interrupt.o arch/i386/ports.o arch/i386/interrupt.o arch/i386/timer.o arch/i386/interrupt.o libc/mem.o arch/i386/interrupt.o libc/string.o arch/i386/interrupt.o
+# Not a target:
+kernel.elf:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 33):
-	i386-elf-ld -o $@ -Ttext 0x1000 $^ 
+
+# Not a target:
+kern/thread.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 debug: lunix.bin kernel.elf
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 41):
-	qemu-system-i386 -s -fda lunix.bin -d guest_errors,int &
+#  recipe to execute (from 'Makefile', line 44):
+	qemu-system-i386 -s -fda lunix.img -d guest_errors,int &
 	${GDB} -ex "target remote localhost:1234" -ex "symbol-file kernel.elf"
 
 # Not a target:
 arch/i386/timer.o:
 #  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
  
 make: *** No rule to make target 'all'.  Stop.
 
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-19 02:32:13.153668927
+#  Last modified 2022-07-19 04:43:46.668077334
 #  File has been updated.
 #  Successfully updated.
 
@@ -320,7 +336,7 @@ clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 57):
+#  recipe to execute (from 'Makefile', line 63):
 	rm -rf *.bin *.dis *.o lunix.bin *.elf
 	rm -rf kern/*.o boot/*.bin drivers/*/*.o boot/*.o cpu/*.o libc/*.o
 
@@ -338,12 +354,6 @@ drivers/keyboard/keyboard.o:
 
 # Not a target:
 libc/mem.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-boot/kernel_entry.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -377,8 +387,14 @@ run: lunix.bin
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 36):
-	qemu-system-i386 -fda lunix.bin --enable-kvm
+#  recipe to execute (from 'Makefile', line 39):
+	qemu-system-i386 -fda lunix.img --enable-kvm
+
+# Not a target:
+arch/i386/kentry.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 kern/shell.o:
@@ -393,24 +409,30 @@ drivers/serial/serial.o:
 #  File has not been updated.
 
 # Not a target:
+arch/i386/switch.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+lunix.elf: arch/i386/kentry.o kern/kernel.o arch/i386/interrupt.o kern/panic.o arch/i386/interrupt.o kern/shell.o arch/i386/interrupt.o kern/thread.o arch/i386/interrupt.o drivers/console/console.o arch/i386/interrupt.o drivers/keyboard/keyboard.o arch/i386/interrupt.o drivers/parallel/parallel.o arch/i386/interrupt.o drivers/serial/serial.o arch/i386/interrupt.o drivers/x86/x86.o arch/i386/interrupt.o arch/i386/idt.o arch/i386/interrupt.o arch/i386/isr.o arch/i386/interrupt.o arch/i386/ports.o arch/i386/interrupt.o arch/i386/timer.o arch/i386/interrupt.o libc/mem.o arch/i386/interrupt.o libc/string.o arch/i386/interrupt.o drivers/parallel/parallel.o drivers/serial/serial.o arch/i386/interrupt.o arch/i386/kentry.o
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 36):
+	i386-elf-ld -o $@ -Ttext 0x1000 $^ 
+
+# Not a target:
 arch/i386/isr.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
-kernel.bin: boot/kernel_entry.o kern/kernel.o arch/i386/interrupt.o kern/panic.o arch/i386/interrupt.o kern/shell.o arch/i386/interrupt.o drivers/console/console.o arch/i386/interrupt.o drivers/keyboard/keyboard.o arch/i386/interrupt.o drivers/parallel/parallel.o arch/i386/interrupt.o drivers/serial/serial.o arch/i386/interrupt.o drivers/x86/x86.o arch/i386/interrupt.o arch/i386/idt.o arch/i386/interrupt.o arch/i386/isr.o arch/i386/interrupt.o arch/i386/ports.o arch/i386/interrupt.o arch/i386/timer.o arch/i386/interrupt.o libc/mem.o arch/i386/interrupt.o libc/string.o arch/i386/interrupt.o drivers/parallel/parallel.o drivers/serial/serial.o
+lunix.bin: arch/i386/kentry.o kern/kernel.o arch/i386/interrupt.o kern/panic.o arch/i386/interrupt.o kern/shell.o arch/i386/interrupt.o kern/thread.o arch/i386/interrupt.o drivers/console/console.o arch/i386/interrupt.o drivers/keyboard/keyboard.o arch/i386/interrupt.o drivers/parallel/parallel.o arch/i386/interrupt.o drivers/serial/serial.o arch/i386/interrupt.o drivers/x86/x86.o arch/i386/interrupt.o arch/i386/idt.o arch/i386/interrupt.o arch/i386/isr.o arch/i386/interrupt.o arch/i386/ports.o arch/i386/interrupt.o arch/i386/timer.o arch/i386/interrupt.o libc/mem.o arch/i386/interrupt.o libc/string.o arch/i386/interrupt.o drivers/parallel/parallel.o drivers/serial/serial.o arch/i386/interrupt.o arch/i386/kentry.o arch/i386/switch.o
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 28):
+#  recipe to execute (from 'Makefile', line 31):
 	i386-elf-ld -o $@ -Ttext 0x1000 $^ --oformat binary
-
-lunix.bin: boot/bootsect.bin kernel.bin
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'Makefile', line 22):
-	cat $^ > lunix.bin
 
 # Not a target:
 boot/bootsect.bin:
@@ -424,20 +446,27 @@ kern/kernel.o:
 #  Modification time never checked.
 #  File has not been updated.
 
+lunix.img: boot/bootsect.bin lunix.bin
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 25):
+	cat $^ > lunix.img
+
 # files hash-table stats:
-# Load=27/1024=3%, Rehash=0, Collisions=0/103=0%
+# Load=30/1024=3%, Rehash=0, Collisions=0/117=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 87 / storage = 949 B / avg = 10 B
-# current buf: size = 8162 B / used = 949 B / count = 87 / avg = 10 B
+# strcache buffers: 1 (0) / strings = 114 / storage = 1189 B / avg = 10 B
+# current buf: size = 8162 B / used = 1189 B / count = 114 / avg = 10 B
 
-# strcache performance: lookups = 168 / hit rate = 48%
+# strcache performance: lookups = 208 / hit rate = 45%
 # hash-table stats:
-# Load=87/8192=1%, Rehash=0, Collisions=0/168=0%
-# Finished Make data base on Tue Jul 19 02:32:25 2022
+# Load=114/8192=1%, Rehash=0, Collisions=1/208=0%
+# Finished Make data base on Tue Jul 19 04:43:57 2022
 
  

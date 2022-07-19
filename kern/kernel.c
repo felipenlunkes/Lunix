@@ -1,4 +1,4 @@
-#include "../arch/i386/isr.h"
+#include <Lunix/kernel/isr.h>
 #include <Lunix/console.h>
 #include "../libc/string.h"
 #include "../libc/mem.h"
@@ -6,7 +6,7 @@
 #include <Lunix/kernel/version.h>
 #include <stdint.h>
 
-lunix_shell();
+void init_shell();
 
 void kernel_main() {
 
@@ -24,6 +24,7 @@ void kernel_main() {
     //asm("int $2");
     //asm("int $3");
 
-    init_shell();
+    initTasking();
 
 }
+

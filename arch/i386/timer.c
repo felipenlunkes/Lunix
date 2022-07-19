@@ -1,5 +1,5 @@
 #include <Lunix/timer.h>
-#include "isr.h"
+#include <Lunix/kernel/isr.h>
 #include <Lunix/ports.h>
 #include "../libc/function.h"
 

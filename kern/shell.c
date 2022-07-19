@@ -4,11 +4,13 @@
 #include <Lunix/kernel/kernel.h>
 #include <stdint.h>
 
-void init_shell(){
+void init_LXmonitor(){
 
-    kprint("\n\nWelcome to the Lunix kernel shell\n");
+    kprint("\n\nWelcome to the Lunix kernel monitor\n");
 
     lunix_shell();
+
+    yield();
 
 }
 
