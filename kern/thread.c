@@ -19,12 +19,14 @@ static void kernel_thread() {
  
 void initTasking() {
 
-    // Get EFLAGS and CR3
-
     kprint("\nInitializing threading...");
+ 
+    // Get EFLAGS and CR3
 
     asm volatile("movl %%cr3, %%eax; movl %%eax, %0;":"=m"(mainTask.regs.cr3)::"%eax");
     asm volatile("pushfl; movl (%%esp), %%eax; movl %%eax, %0; popfl;":"=m"(mainTask.regs.eflags)::"%eax");
+ 
+    kprint("\nCreating the first thread...");
  
     createTask(&otherTask, kernel_thread, mainTask.regs.eflags, (uint32_t*)mainTask.regs.cr3);
 
@@ -38,8 +40,6 @@ void initTasking() {
 }
  
 void createTask(Task *task, void (*main)(), uint32_t flags, uint32_t *pagedir) {
-
-    kprint("\nCreating the first thread...");
 
     uint32_t phys_addr;
 
