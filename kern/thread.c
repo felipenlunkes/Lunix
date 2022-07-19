@@ -16,21 +16,32 @@ static void kernel_thread() {
     init_LXmonitor();
 
 }
- 
-void initTasking() {
 
-    kprint("\nInitializing threading...");
+void initTasking(){
  
+  kprint("\nInitializing threading...");
+ 
+  exec(kernel_thread);
+ 
+  kprint("\nCreating the first thread...");
+ 
+  yield();
+ 
+}
+
+void exec(void (*entry_task)()) {
+
     // Get EFLAGS and CR3
 
     asm volatile("movl %%cr3, %%eax; movl %%eax, %0;":"=m"(mainTask.regs.cr3)::"%eax");
     asm volatile("pushfl; movl (%%esp), %%eax; movl %%eax, %0; popfl;":"=m"(mainTask.regs.eflags)::"%eax");
  
-    kprint("\nCreating the first thread...");
- 
-    createTask(&otherTask, kernel_thread, mainTask.regs.eflags, (uint32_t*)mainTask.regs.cr3);
+    createTask(&otherTask, entry_task, mainTask.regs.eflags, (uint32_t*)mainTask.regs.cr3);
 
-    yield();
+    mainTask.next = &otherTask;
+    otherTask.next = &mainTask;
+ 
+    runningTask = &mainTask;
 
 }
  
@@ -49,11 +60,6 @@ void createTask(Task *task, void (*main)(), uint32_t flags, uint32_t *pagedir) {
     task->regs.cr3 = (uint32_t) pagedir;
     task->regs.esp = kmalloc(1000, 1, &phys_addr);
     task->next = 0;
-
-    mainTask.next = &otherTask;
-    otherTask.next = &mainTask;
- 
-    runningTask = &mainTask;
  
 }
  
