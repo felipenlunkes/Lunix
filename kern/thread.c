@@ -7,18 +7,6 @@ static Task *runningTask;
 static Task mainTask;
 static Task otherTask;
 
-void initTasking(){
- 
-  kprint("\nInitializing threading...");
- 
-  exec(kernel_thread);
- 
-  kprint("\nCreating the first thread...");
- 
-  yield();
- 
-}
-
 void exec(void (*entry_task)()) {
 
     // Get EFLAGS and CR3
