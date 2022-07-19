@@ -6,9 +6,7 @@
 #include <Lunix/kernel/version.h>
 #include <stdint.h>
 
-void init_shell();
-
-void kernel_main() {
+void kern_main() {
 
     kprint("\nLunix kernel version ");
     kprint(LUNIX_VERSION);
