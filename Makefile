@@ -1,10 +1,10 @@
-C_SOURCES = $(wildcard kern/*.c drivers/*/*.c  cpu/*.c libc/*.c)
+C_SOURCES = $(wildcard kern/*.c drivers/*/*.c  arch/i386/*.c libc/*.c)
 ASM_SOURCES = $(wildcard drivers/*/*.asm)
-HEADERS = $(wildcard kern/*.h drivers/*.h cpu/*.h libc/*.h)
+HEADERS = $(wildcard kern/*.h drivers/*.h arch/i386/*.h libc/*.h)
 
 # Nice syntax for file extension replacement
 
-OBJ = ${C_SOURCES:.c=.o cpu/interrupt.o} 
+OBJ = ${C_SOURCES:.c=.o arch/i386/interrupt.o} 
 ASM = ${ASM_SOURCES:.asm=.o}
 
 # Change this if your cross-compiler is somewhere else

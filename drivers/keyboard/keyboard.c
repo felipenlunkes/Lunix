@@ -1,6 +1,6 @@
 #include <Lunix/keyboard.h>
 #include <Lunix/ports.h>
-#include "../cpu/isr.h"
+#include "../arch/i386/isr.h"
 #include <Lunix/console.h>
 #include "../libc/string.h"
 #include "../libc/function.h"

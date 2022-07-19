@@ -1,4 +1,3 @@
-#include "../cpu/isr.h"
 #include <Lunix/console.h>
 #include "../libc/string.h"
 #include "../libc/mem.h"
