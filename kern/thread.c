@@ -7,16 +7,6 @@ static Task *runningTask;
 static Task mainTask;
 static Task otherTask;
 
-void init_LXmonitor();
- 
-static void kernel_thread() {
-    
-    kprint("\nkernel_thread: PID 0 started");
-
-    init_LXmonitor();
-
-}
-
 void initTasking(){
  
   kprint("\nInitializing threading...");
