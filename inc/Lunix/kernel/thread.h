@@ -14,6 +14,7 @@ typedef struct {
 typedef struct Task {
 
     Registers regs;
+    int PID;
     struct Task *next;
 
 } Task;
