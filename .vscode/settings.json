@@ -1,3 +1,10 @@
 {
-    "C_Cpp.errorSquiggles": "Disabled"
+    "C_Cpp.errorSquiggles": "Disabled",
+    "files.associations": {
+        "*.asm": "asm",
+        "ports.h": "c",
+        "function.h": "c",
+        "console.h": "c",
+        "stdint.h": "c"
+    }
 }
