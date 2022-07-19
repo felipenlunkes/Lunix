@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 /* ISRs reserved for CPU exceptions */
+
 extern void isr0();
 extern void isr1();
 extern void isr2();
@@ -36,7 +37,9 @@ extern void isr28();
 extern void isr29();
 extern void isr30();
 extern void isr31();
+
 /* IRQ definitions */
+
 extern void irq0();
 extern void irq1();
 extern void irq2();
@@ -78,11 +81,14 @@ extern void irq15();
  * - All the registers by pusha
  * - `push eax` whose lower 16-bits contain DS
  */
+
 typedef struct {
+
    uint32_t ds; /* Data segment selector */
    uint32_t edi, esi, ebp, useless, ebx, edx, ecx, eax; /* Pushed by pusha. */
    uint32_t int_no, err_code; /* Interrupt number and error code (if applicable) */
    uint32_t eip, cs, eflags, esp, ss; /* Pushed by the processor automatically */
+   
 } registers_t;
 
 void isr_install();

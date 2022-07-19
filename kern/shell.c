@@ -1,9 +1,8 @@
 #include "../cpu/isr.h"
-#include "../drivers/screen.h"
+#include <Lunix/console.h>
 #include "../libc/string.h"
 #include "../libc/mem.h"
-#include "kernel.h"
-#include "version.h"
+#include <Lunix/kernel/kernel.h>
 #include <stdint.h>
 
 void init_shell(){
@@ -16,13 +15,11 @@ void init_shell(){
 
 void lunix_shell(char *input) {
 
-    if (strcmp(input, "END") == 0) {
+    if (strcmp(input, "PANIC") == 0) {
 
-        kprint("Stopping the CPU. Bye!\n");
+        panic("the user forced a kernel panic. Reboot\n");
 
-        asm volatile("hlt");
-
-    } else if (strcmp(input, "PAGE") == 0) {
+    } else if (strcmp(input, "MALLOC") == 0) {
 
         uint32_t phys_addr;
         uint32_t page = kmalloc(1000, 1, &phys_addr);
@@ -39,6 +36,7 @@ void lunix_shell(char *input) {
         kprint(", physical address: ");
         kprint(phys_str);
         kprint("\n");
+
     }
 
     kprint("> ");

@@ -1,5 +1,5 @@
 #include "../libc/string.h"
-#include "../drivers/screen.h"
+#include <Lunix/console.h>
 
 void init_COM1(){
 

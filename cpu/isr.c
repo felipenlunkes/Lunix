@@ -1,9 +1,9 @@
 #include "isr.h"
-#include "../drivers/screen.h"
-#include "../drivers/keyboard.h"
+#include <Lunix/console.h>
+#include <Lunix/keyboard.h>
 #include "../libc/string.h"
-#include "timer.h"
-#include "ports.h"
+#include <Lunix/timer.h>
+#include <Lunix/ports.h>
 
 #ifndef IDT_H
 #define IDT_H
@@ -199,7 +199,7 @@ void irq_handler(registers_t *r) {
         isr_t handler = interrupt_handlers[r->int_no];
 
         handler(r);
-        
+
     }
 }
 

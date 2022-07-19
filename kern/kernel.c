@@ -1,9 +1,9 @@
 #include "../cpu/isr.h"
-#include "../drivers/screen.h"
+#include <Lunix/console.h>
 #include "../libc/string.h"
 #include "../libc/mem.h"
-#include "kernel.h"
-#include "version.h"
+#include <Lunix/kernel/kernel.h>
+#include <Lunix/kernel/version.h>
 #include <stdint.h>
 
 lunix_shell();
@@ -15,6 +15,7 @@ void kernel_main() {
     kprint(LUNIX_VERSION);
     kprint("\n");
 
+    config_x86();
     isr_install();
     irq_install();
     init_COM1();
