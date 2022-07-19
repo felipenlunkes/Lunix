@@ -7,14 +7,14 @@ static Task *runningTask;
 static Task mainTask;
 static Task otherTask;
 
-void kexec(void (*entry_task)()) {
+void kexec(void (*entry_task)(), int PID) {
 
     // Get EFLAGS and CR3
 
     asm volatile("movl %%cr3, %%eax; movl %%eax, %0;":"=m"(mainTask.regs.cr3)::"%eax");
     asm volatile("pushfl; movl (%%esp), %%eax; movl %%eax, %0; popfl;":"=m"(mainTask.regs.eflags)::"%eax");
  
-    createTask(&otherTask, entry_task, mainTask.regs.eflags, (uint32_t*)mainTask.regs.cr3);
+    createTask(&otherTask, entry_task, mainTask.regs.eflags, (uint32_t*)mainTask.regs.cr3, PID);
 
     mainTask.next = &otherTask;
     otherTask.next = &mainTask;
@@ -23,7 +23,7 @@ void kexec(void (*entry_task)()) {
 
 }
  
-void createTask(Task *task, void (*main)(), uint32_t flags, uint32_t *pagedir) {
+void createTask(Task *task, void (*main)(), uint32_t flags, uint32_t *pagedir, uint32_t PID) {
 
     uint32_t phys_addr;
 
@@ -37,6 +37,7 @@ void createTask(Task *task, void (*main)(), uint32_t flags, uint32_t *pagedir) {
     task->regs.eip = (uint32_t) main;
     task->regs.cr3 = (uint32_t) pagedir;
     task->regs.esp = kmalloc(1000, 1, &phys_addr);
+    task->PID = PID;
     task->next = 0;
  
 }
