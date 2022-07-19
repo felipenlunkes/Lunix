@@ -19,6 +19,7 @@ typedef struct Task {
 } Task;
  
 extern void initTasking();
+extern void exec(void(*)());
 extern void createTask(Task*, void(*)(), uint32_t, uint32_t*);
  
 extern void yield(); // Switch task frontend
