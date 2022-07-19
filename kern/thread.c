@@ -7,7 +7,7 @@ static Task *runningTask;
 static Task mainTask;
 static Task otherTask;
 
-void init_shell();
+void init_LXmonitor();
  
 static void kernel_thread() {
     
@@ -18,7 +18,6 @@ static void kernel_thread() {
 }
  
 void initTasking() {
-
 
     // Get EFLAGS and CR3
 
