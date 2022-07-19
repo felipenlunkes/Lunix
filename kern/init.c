@@ -17,7 +17,7 @@ void initTasking(){
  
   kprint("\nInitializing threading...");
  
-  kexec(kernel_thread);
+  kexec(kernel_thread, 0); // PID 0 for the kernel_thread
  
   kprint("\nCreating the first thread...");
  
