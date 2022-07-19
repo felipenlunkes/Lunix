@@ -11,7 +11,7 @@ static void kernel_thread() {
 
     kprint("\nStarting PID 1 (LX monitor)...");
      
-    kecev(init_LXmonitor, 1);
+    kexec(init_LXmonitor, 1);
  
     yield();
 
