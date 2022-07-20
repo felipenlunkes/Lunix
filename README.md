@@ -99,7 +99,9 @@ You may want to add the `$PATH` to your `.bashrc`. To do that, use the command b
 echo 'export PATH="$PREFIX/bin:$PATH"' >> /home/your_user/.bashrc
 ```
 
-### Build the system
+<hr>
+
+## Build the system
 
 To build Lunix, run make on the source folder. To do that, use:
 
