@@ -32,9 +32,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <Lunix/console.h>
 #include "../libc/string.h"
 #include "../libc/mem.h"
+#include "Lunix/kernel/keyboard.h"
 #include <Lunix/kernel/kernel.h>
 #include <Lunix/kernel/thread.h>
 #include <stdint.h>
+
+#define BUFFER 64
 
 void LXinit_user_task(){
 
@@ -56,79 +59,141 @@ int setUser=0;
 
 void LXmonitor(char *input) {
 
-    if (strcmp(input, "PANIC") == 0) {
+    char keybbuffer[BUFFER];
+	int command = 0;
+	uint8_t letter;
 
-        panic("the user forced a kernel panic. Reboot\n");
+    strcpy(&keybbuffer[strlen(keybbuffer)], "");
 
-    } else if (strcmp(input, "KMALLOC") == 0) {
+    kprint("Lunix > ");
+    
+    while (1)
+	{
+		while (letter = scanf())
+		{
+			if (letter == ENTER)
+			{
 
-        uint32_t phys_addr;
-        uint32_t page = kmalloc(1000, 1, &phys_addr);
-        char page_str[16] = "";
+            if (strcmp(keybbuffer, "PANIC") == 0) {
+
+            panic("the user forced a kernel panic. Reboot\n");
+
+            } else if (strcmp(keybbuffer, "KMALLOC") == 0) {
+
+            uint32_t phys_addr;
+            uint32_t page = kmalloc(1000, 1, &phys_addr);
+            char page_str[16] = "";
         
-        hex_to_ascii(page, page_str);
+            hex_to_ascii(page, page_str);
         
-        char phys_str[16] = "";
+            char phys_str[16] = "";
        
-        hex_to_ascii(phys_addr, phys_str);
+            hex_to_ascii(phys_addr, phys_str);
        
-        kprint("Page: ");
-        kprint(page_str);
-        kprint(", physical address: ");
-        kprint(phys_str);
-        kprint("\n");
+            kprint("\n\nPage: ");
+            kprint(page_str);
+            kprint(", physical address: ");
+            kprint(phys_str);
+            kprint("\n");
 
-    }
+            }
 
-    else if (strcmp(input, "HELP") == 0) {
+            else if (strcmp(keybbuffer, "HELP") == 0) {
 
-        kprint("\nThe kernel monitor allows you to:\n");
-        kprint("\n1: Test kernel functions");
-        kprint("\n2: Test the hardware response");
-        kprint("\nTry type 'CMD' to see the available commands.\n\n");
+            kprint("\nThe kernel monitor allows you to:\n");
+            kprint("\n1: Test kernel functions");
+            kprint("\n2: Test the hardware response");
+            kprint("\nTry type 'CMD' to see the available commands.\n\n");
     
-    }
+            }
 
-    else if (strcmp(input, "CMD") == 0) {
+            else if (strcmp(keybbuffer, "CMD") == 0) {
 
-        kprint("\nAvailable Lunix monitor commands:\n");
-        kprint("\nPANIC      - Force a kernel panic");
-        kprint("\nKMALLOC    - Test the Lunix kmalloc()");
-        kprint("\nHELP       - See the help");
-        kprint("\nCMD        - View this help");
-        kprint("\nREBOOT     - Reboot the device");
-        kprint("\nSHUTDOWN   - Shutdown the device");
-        kprint("\nUSER       - See who are logged in");
-        kprint("\nCLEAR      - Clear the screen\n\n");
+            kprint("\nAvailable Lunix monitor commands:\n");
+            kprint("\nPANIC      - Force a kernel panic");
+            kprint("\nKMALLOC    - Test the Lunix kmalloc()");
+            kprint("\nHELP       - See the help");
+            kprint("\nCMD        - View this help");
+            kprint("\nREBOOT     - Reboot the device");
+            kprint("\nSHUTDOWN   - Shutdown the device");
+            kprint("\nUSER       - See who are logged in");
+            kprint("\nCLEAR      - Clear the screen\n\n");
     
-    }
+            }
 
-    else if (strcmp(input, "REBOOT") == 0) {
+            else if (strcmp(keybbuffer, "REBOOT") == 0) {
 
-        LXreboot();
+            LXreboot();
     
-    }
+            }
 
-    else if (strcmp(input, "SHUTDOWN") == 0) {
+            else if (strcmp(keybbuffer, "SHUTDOWN") == 0) {
 
-        LXshutdown();
+            LXshutdown();
     
-    }
+            }
 
-    else if (strcmp(input, "USER") == 0) {
+            else if (strcmp(keybbuffer, "USER") == 0) {
 
-        int userID=LXget_userID(1);
+            int userID=LXget_userID(1);
 
-        kprint("\nUser ID: ");
-        kprint(userID);
-    }
+            kprint("\nUser ID: ");
+            kprint(userID);
 
-    else if (strcmp(input, "CLEAR") == 0) {
+            }
 
-        clear_screen();
+            else if (strcmp(keybbuffer, "CLEAR") == 0) {
+
+            clear_screen();
         
-    }
+            }
 
-    kprint("> ");
+            kprint("\nLunix > ");
+
+			memory_set(keybbuffer, 0, BUFFER);
+
+			break;
+
+			}
+
+			else if ((letter == BACKSPACE) && (strlen(keybbuffer) == 0))
+			{
+
+			}
+
+			else if (letter == BACKSPACE)
+			{
+
+				char c = resolvChar(letter);
+				char *s;
+
+				s = ctos(s, c);
+
+				kprint(s);
+
+				keybbuffer[strlen(keybbuffer) - 1] = '\0';
+
+			}
+
+			else
+			{
+
+				char c = resolvChar(letter);
+				char *s;
+
+				s = ctos(s, c);
+
+				kprint(s);
+
+				strcpy(&keybbuffer[strlen(keybbuffer)], s);
+
+	    command = 0;
+
+	    }
+
+        }
+
+    }
 
 }
+
