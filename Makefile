@@ -11,9 +11,9 @@ SAS = ${S_SOURCES:.s=.o}
 
 # Change this if your cross-compiler is somewhere else
 
-CC = /usr/local/i386elfgcc/bin/i386-elf-gcc
-GDB = /usr/local/i386elfgcc/bin/i386-elf-gdb
-AS = = /usr/local/i386elfgcc/bin/i386-elf-as
+CC = /usr/local/lunixgcc/bin/i386-elf-gcc
+GDB = /usr/local/lunixgcc/bin/i386-elf-gdb
+AS = = /usr/local/lunixgcc/bin/i386-elf-as
 
 # -g: Use debugging symbols in gcc
 

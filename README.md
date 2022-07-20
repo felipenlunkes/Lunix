@@ -28,7 +28,7 @@ You will need to build binutils and a cross-compiled gcc, and put them into `/us
 
 ```
 export PREFIX="/usr/local/lunixgcc"
-export TARGET=i386-elf-lunix
+export TARGET=i386-elf
 export PATH="$PREFIX/bin:$PATH"
 ```
 
