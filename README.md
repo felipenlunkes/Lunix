@@ -9,7 +9,7 @@ Lunix is ​​a new operating system written in C for the x86 architecture for 
 The system already supports:
 
 * 32-bit protected mode;
-* Keyboard drivers, console serial and parallel ports and the list will only grow;
+* Keyboard, console, serial and parallel ports drivers and the list will only grow;
 * Task and processes models;
 
 To build this system, I've been applying my knowledge gained in [Hexagonix](https://github.com/hexagonix) development, taking advantage of assembly code or converting it to C.
