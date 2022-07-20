@@ -18,10 +18,10 @@ The rudimentary foundation of Lunix OS was based on the great tutorials availabl
 
 ## Build
 
-To build Lunix, you must build the cross-compiler tools. For that, you first need to install the dependencies to build gcc, binutils and the system:
+To build Lunix, you must build the cross-compiler tools. For that, you first need to install the dependencies to build gcc, binutils and the system (on `Ubuntu`, `´Debian` or `Pop!_OS`):
 
 ```
-sudo apt install gcc libmpc-dev nasm fasm
+sudo apt install gcc libmpc-dev nasm fasm qemu-system qemu-system-i386
 ```
 
 You will need to build binutils and a cross-compiled gcc, and put them into `/usr/local/lunixgcc`. To do that, use:
