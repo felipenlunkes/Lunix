@@ -1,5 +1,7 @@
 <p align='center'>
 <a href="https://github.com/felipenlunkes/lunix"><img height="150" src="https://github.com/felipenlunkes/Lunix/blob/main/Doc/header.gif"></a>&nbsp;&nbsp;
+<br>
+<a href="https://github.com/felipenlunkes/lunix"><img height="150" src="https://img.shields.io/badge/C-F5b342?style=for-the-badge&logo=c&logoColor=white"></a>
 </p>
 
 # Lunix OS
