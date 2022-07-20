@@ -4,4 +4,67 @@ Lunix OS is a new operating system written in C language for the x86 architectur
 
 ## Build
 
-More info soon!
+To build Lunix, you must build the cross-compiler tools. For that, you first need to install the dependencies to build gcc and binutils:
+
+```
+sudo apt install gcc libmpc-dev
+```
+
+You will need to build binutils and a cross-compiled gcc, and put them into `/usr/local/i386elfgcc`. To do that, use:
+
+```
+export PREFIX="/usr/local/i386elfgcc"
+export TARGET=i386-elf
+export PATH="$PREFIX/bin:$PATH"
+```
+
+### Building binutils
+
+To build binutils, use the follow shell commands:
+
+```sh
+mkdir /tmp/src
+cd /tmp/src
+curl -O http://ftp.gnu.org/gnu/binutils/binutils-2.24.tar.gz # If the link 404's, look for a more recent version
+tar xf binutils-2.24.tar.gz
+mkdir binutils-build
+cd binutils-build
+../binutils-2.24/configure --target=$TARGET --enable-interwork --enable-multilib --disable-nls --disable-werror --prefix=$PREFIX 2>&1 | tee configure.log
+make all install 2>&1 | tee make.log
+```
+
+### Buildind GCC
+
+Use the commands below:
+
+```sh
+cd /tmp/src
+curl -O https://ftp.gnu.org/gnu/gcc/gcc-4.9.1/gcc-4.9.1.tar.bz2
+tar xf gcc-4.9.1.tar.bz2
+mkdir gcc-build
+cd gcc-build
+../gcc-4.9.1/configure --target=$TARGET --prefix="$PREFIX" --disable-nls --disable-libssp --enable-languages=c --without-headers
+make all-gcc 
+make all-target-libgcc 
+make install-gcc 
+make install-target-libgcc 
+```
+
+That's it! You should have all the GNU binutils and the compiler at `/usr/local/i386elfgcc/bin`, prefixed by `i386-elf-` to avoid collisions with your system's compiler and binutils.
+
+You may want to add the `$PATH` to your `.bashrc`.
+
+### Build the system
+
+To build the Lunix, run make on the source tree folder.
+
+```
+make
+```
+
+To test the system, use:
+
+```
+make run
+```
+
