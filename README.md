@@ -34,6 +34,10 @@ On `Ubuntu`, `Debian` or `Pop!_OS`, use:
 sudo apt install gcc libmpc-dev nasm fasm qemu-system qemu-system-i386
 ```
 
+<hr>
+
+## Building the cross-compiler and tools
+
 You will need to build binutils and a cross-compiled gcc, and put them into `/usr/local/lunixgcc`. To do that, use:
 
 ```
@@ -41,10 +45,6 @@ export PREFIX="/usr/local/lunixgcc"
 export TARGET=i386-elf
 export PATH="$PREFIX/bin:$PATH"
 ```
-
-<hr>
-
-## Building the cross-compiler and tools
 
 ### Building binutils
 
