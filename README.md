@@ -64,7 +64,7 @@ make install-gcc
 make install-target-libgcc 
 ```
 
-That's it! You should have all the GNU binutils and the compiler at `/usr/local/lunixgcc/bin`, prefixed by `i386-elf-lunix-` to avoid collisions with your system's compiler and binutils.
+That's it! You should have all the GNU binutils and the compiler at `/usr/local/lunixgcc/bin`, prefixed by `i386-elf-` to avoid collisions with your system's compiler and binutils.
 
 You may want to add the `$PATH` to your `.bashrc`.
 
