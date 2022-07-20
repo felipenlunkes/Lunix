@@ -39,6 +39,14 @@ On `Ubuntu`, `Debian` or `Pop!_OS`, use:
 sudo apt install gcc libmpc-dev nasm fasm qemu-system qemu-system-i386
 ```
 
+### Windows (WSL2)
+
+On Windows, you must first install WSL2 to build Lunix. After that, you must install Ubuntu through the Windows Store. Then use the command below to install the dependencies:
+
+```
+sudo apt install gcc libmpc-dev nasm fasm qemu-system qemu-system-i386
+```
+
 <hr>
 
 ## Building the cross-compiler and tools
