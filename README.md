@@ -24,7 +24,7 @@ To build Lunix, you must build the cross-compiler tools. For that, you first nee
 sudo apt install gcc libmpc-dev nasm fasm
 ```
 
-You will need to build binutils and a cross-compiled gcc, and put them into `/usr/local/i386elfgcc`. To do that, use:
+You will need to build binutils and a cross-compiled gcc, and put them into `/usr/local/lunixgcc`. To do that, use:
 
 ```
 export PREFIX="/usr/local/lunixgcc"
