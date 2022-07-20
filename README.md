@@ -70,7 +70,7 @@ You may want to add the `$PATH` to your `.bashrc`.
 
 ### Build the system
 
-To build the Lunix, run make on the source tree folder.
+To build Lunix, run make on the source folder. To do that, use:
 
 ```
 make
