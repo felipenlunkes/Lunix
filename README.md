@@ -1,4 +1,6 @@
-[![Header](https://github.com/felipenlunkes/Lunix/blob/main/Doc/header.gif "Header")]
+<p align='center'>
+<a href="https://github.com/lunix"><img height="300" src="https://github.com/felipenlunkes/Lunix/blob/main/Doc/header.gif"></a>&nbsp;&nbsp;
+</p>
 
 # Lunix OS
 
