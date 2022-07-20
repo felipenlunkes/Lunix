@@ -1,6 +1,16 @@
 # Lunix OS
 
-Lunix OS is a new operating system written in C language for the x86 architecture. The rudimentary foundation of Lunix OS was based on the tutorials available [here](https://github.com/cfenollosa/os-tutorial). The system already has thread support and will soon be much more complete!
+Lunix is ​​a new operating system written in C for the x86 architecture for educational purposes, serving as a testing ground for my learning in C language, hardware and operating system architecture. Some components are written in x86 Assembly.
+
+The system already supports:
+
+* 32-bit protected mode;
+* Keyboard drivers, console serial and parallel ports and the list will only grow;
+* Task and processes model;
+
+To build this system, I've been applying my knowledge gained in [Hexagonix](https://github.com/hexagonix) development, taking advantage of assembly code or converting it to C.
+
+The rudimentary foundation of Lunix OS was based on the great tutorials available [here](https://github.com/cfenollosa/os-tutorial). The system already has thread support and will soon be much more complete!
 
 ## Build
 
