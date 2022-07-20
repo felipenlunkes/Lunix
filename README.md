@@ -1,5 +1,5 @@
 <p align='center'>
-<a href="https://github.com/lunix"><img height="200" src="https://github.com/felipenlunkes/Lunix/blob/main/Doc/header.gif"></a>&nbsp;&nbsp;
+<a href="https://github.com/lunix"><img height="150" src="https://github.com/felipenlunkes/Lunix/blob/main/Doc/header.gif"></a>&nbsp;&nbsp;
 </p>
 
 # Lunix OS
