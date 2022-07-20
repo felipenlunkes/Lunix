@@ -8,6 +8,7 @@
 isr_common_stub:
 
     ; 1. Save CPU state
+
 	pusha ; Pushes edi,esi,ebp,esp,ebx,edx,ecx,eax
 
 	mov ax, ds ; Lower 16-bits of eax = ds.
@@ -22,6 +23,7 @@ isr_common_stub:
 	push esp ; registers_t *r
 
     ; 2. Call C handler
+    
     cld ; C code following the sysV ABI requires DF to be clear on function entry
 
 	call isr_handler
