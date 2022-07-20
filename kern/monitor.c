@@ -5,23 +5,25 @@
 #include <Lunix/kernel/thread.h>
 #include <stdint.h>
 
-void init_LXmonitor(){
+void LXinit_user_task(){
 
 int setUser=0;
 
-    kprint("\n\nWelcome to the Lunix kernel monitor\n");
+    kprint("\n\nWelcome to the Lunix kernel monitor prompt\n");
 
     LXset_user(1, "root", 777, 1);
 
     kprint("\n");
 
-    lunix_monitor();
+// Start the Lunix kernel monitor task
+
+    LXmonitor();
 
     yield();
 
 }
 
-void lunix_monitor(char *input) {
+void LXmonitor(char *input) {
 
     if (strcmp(input, "PANIC") == 0) {
 
@@ -52,13 +54,33 @@ void lunix_monitor(char *input) {
         kprint("\nThe kernel monitor allows you to:\n");
         kprint("\n1: Test kernel functions");
         kprint("\n2: Test the hardware response");
-        kprint("\nA lot is to come!\n\n");
+        kprint("\nTry type 'CMD' to see the available commands.\n\n");
+    
+    }
+
+    else if (strcmp(input, "CMD") == 0) {
+
+        kprint("\nAvailable Lunix monitor commands:\n");
+        kprint("\nPANIC      - Force a kernel panic");
+        kprint("\nKMALLOC    - Test the Lunix kmalloc()");
+        kprint("\nHELP       - See the help");
+        kprint("\nCMD        - View this help");
+        kprint("\nREBOOT     - Reboot the device");
+        kprint("\nSHUTDOWN   - Shutdown the device");
+        kprint("\nUSER       - See who are logged in");
+        kprint("\nCLEAR      - Clear the screen\n\n");
     
     }
 
     else if (strcmp(input, "REBOOT") == 0) {
 
         LXreboot();
+    
+    }
+
+    else if (strcmp(input, "SHUTDOWN") == 0) {
+
+        LXshutdown();
     
     }
 

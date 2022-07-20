@@ -2,7 +2,7 @@
 #include <Lunix/kernel/thread.h>
 #include <stdint.h>
 
-void init_LXmonitor();
+void LXinit_user_task();
 
 static void kernel_thread() {
     
@@ -24,7 +24,7 @@ void initTasking(){
 
     kprint("\nCreating the first thread (PID 1)...");
 
-    exec(init_LXmonitor, 1);
+    exec(LXinit_user_task, 1);
 
     yield();
 

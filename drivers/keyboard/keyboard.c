@@ -45,7 +45,7 @@ static void keyboard_callback(registers_t *regs) {
 
         kprint("\n");
 
-        lunix_monitor(key_buffer); /* kernel-controlled function */
+        LXmonitor(key_buffer); /* kernel-controlled function */
 
         key_buffer[0] = '\0';
 
