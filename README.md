@@ -6,7 +6,7 @@ The system already supports:
 
 * 32-bit protected mode;
 * Keyboard drivers, console serial and parallel ports and the list will only grow;
-* Task and processes model;
+* Task and processes models;
 
 To build this system, I've been applying my knowledge gained in [Hexagonix](https://github.com/hexagonix) development, taking advantage of assembly code or converting it to C.
 
