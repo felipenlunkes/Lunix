@@ -25,6 +25,9 @@ To build Lunix, you must build the cross-compiler tools. For that, you first nee
 
 ### macOS
 
+On macOS, you must install the dependencies using the brew tool:
+
+brew install gmp mpfr libmpc gcc
 
 ### Linux
 
