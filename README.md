@@ -48,7 +48,7 @@ export PATH="$PREFIX/bin:$PATH"
 
 ### Building binutils
 
-To build binutils, use the follow shell commands:
+To build ```binutils```, use the follow shell commands:
 
 ```sh
 mkdir /tmp/src
@@ -63,7 +63,7 @@ make all install 2>&1 | tee make.log
 
 ### Buildind GCC
 
-Use the commands below:
+Use the commands below to build ```GCC```:
 
 ```sh
 cd /tmp/src
