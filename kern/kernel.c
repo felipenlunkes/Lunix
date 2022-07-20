@@ -1,5 +1,6 @@
 #include <Lunix/kernel/isr.h>
 #include <Lunix/console.h>
+#include <Lunix/io.h>
 #include "../libc/string.h"
 #include "../libc/mem.h"
 #include <Lunix/kernel/kernel.h>

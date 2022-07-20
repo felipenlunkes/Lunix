@@ -56,6 +56,12 @@ void lunix_monitor(char *input) {
     
     }
 
+    else if (strcmp(input, "REBOOT") == 0) {
+
+        LXreboot();
+    
+    }
+
     else if (strcmp(input, "USER") == 0) {
 
         int userID=LXget_userID(1);
