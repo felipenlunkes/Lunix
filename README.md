@@ -1,4 +1,4 @@
-[![Header](https://raw.githubusercontent.com/felipenlunkes/lunix/master/Doc/header.png "Header")]
+[![Header](https://github.com/felipenlunkes/Lunix/blob/main/Doc/header.gif "Header")]
 
 # Lunix OS
 
