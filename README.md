@@ -69,7 +69,7 @@ That's it! You should have all the GNU binutils and the compiler at `/usr/local/
 You may want to add the `$PATH` to your `.bashrc`. To do that, use the command bellow:
 
 ```sh
-echo 'export PATH="$PREFIX/bin:$PATH"' >> /home/your_user/.bashrc"
+echo 'export PATH="$PREFIX/bin:$PATH"' >> /home/your_user/.bashrc
 ```
 
 ### Build the system
