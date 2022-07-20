@@ -16,9 +16,19 @@ To build this system, I've been applying my knowledge gained in [Hexagonix](http
 
 The rudimentary foundation of Lunix OS was based on the great tutorials available [here](https://github.com/cfenollosa/os-tutorial). The system already has thread support and will soon be much more complete!
 
-## Build
+<hr> 
 
-To build Lunix, you must build the cross-compiler tools. For that, you first need to install the dependencies to build gcc, binutils and the system (on `Ubuntu`, `Debian` or `Pop!_OS`):
+## Build dependencies
+
+To build Lunix, you must build the cross-compiler tools. For that, you first need to install the dependencies to build gcc, binutils and the system.
+
+
+### macOS
+
+
+### Linux
+
+On `Ubuntu`, `Debian` or `Pop!_OS`, use:
 
 ```
 sudo apt install gcc libmpc-dev nasm fasm qemu-system qemu-system-i386
@@ -31,6 +41,10 @@ export PREFIX="/usr/local/lunixgcc"
 export TARGET=i386-elf
 export PATH="$PREFIX/bin:$PATH"
 ```
+
+<hr>
+
+## Building the cross-compiler and tools
 
 ### Building binutils
 
