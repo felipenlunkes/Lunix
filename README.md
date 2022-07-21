@@ -85,11 +85,12 @@ Use the commands below to build ```GCC```:
 
 ```sh
 cd /tmp/src
-curl -O https://ftp.gnu.org/gnu/gcc/gcc-4.9.1/gcc-4.9.1.tar.bz2
-tar xf gcc-4.9.1.tar.bz2
+curl -O https://ftp.gnu.org/gnu/gcc/gcc-12.1.0/gcc-12.1.0.tar.xz
+xz -d gcc-12.1.0.tar.xz
+tar xf gcc-12.1.0.tar 
 mkdir gcc-build
 cd gcc-build
-../gcc-4.9.1/configure --target=$TARGET --prefix="$PREFIX" --disable-nls --disable-libssp --enable-languages=c --without-headers
+../gcc-12.1.0/configure --target=$TARGET --prefix="$PREFIX" --disable-nls --disable-libssp --enable-languages=c --without-headers
 make all-gcc 
 make all-target-libgcc 
 make install-gcc 
