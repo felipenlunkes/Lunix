@@ -4,6 +4,10 @@
 
 # Lunix OS
 
+<p align='center'>
+<a href="https://github.com/felipenlunkes/lunix"><img height="400" src="https://github.com/felipenlunkes/Lunix/blob/main/Doc/Lunix_current.png"></a>&nbsp;&nbsp;
+</p>
+
 Lunix is a new operating system written in C for the x86 architecture for educational purposes, serving as a testing ground for my learning in C language, hardware and operating system architecture. Some components are written in x86 Assembly.
 
 The system already supports:
