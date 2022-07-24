@@ -1,1 +1,1 @@
-#define LUNIX_VERSION "0.0.0.3"
+#define LUNIX_VERSION "0.0.0.4"
