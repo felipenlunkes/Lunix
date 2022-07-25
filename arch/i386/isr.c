@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <Lunix/kernel/isr.h>
 #include <Lunix/console.h>
 #include <Lunix/keyboard.h>
-#include "../libc/string.h"
+#include <string.h>
 #include <Lunix/timer.h>
 #include <Lunix/ports.h>
 

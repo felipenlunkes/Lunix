@@ -29,8 +29,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include <Lunix/console.h>
-#include "../libc/string.h"
-#include "../libc/mem.h"
+#include <string.h>
+#include <mem.h>
 #include <Lunix/kernel/kernel.h>
 #include <Lunix/kernel/thread.h>
 #include <Lunix/ports.h>

@@ -31,8 +31,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <Lunix/kernel/isr.h>
 #include <Lunix/console.h>
 #include <Lunix/io.h>
-#include "../libc/string.h"
-#include "../libc/mem.h"
+#include <string.h>
+#include <mem.h>
 #include <Lunix/kernel/kernel.h>
 #include <Lunix/kernel/version.h>
 #include <stdint.h>

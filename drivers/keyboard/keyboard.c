@@ -33,8 +33,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <Lunix/ports.h>
 #include <Lunix/kernel/isr.h>
 #include <Lunix/console.h>
-#include "../libc/string.h"
-#include "../libc/function.h"
+#include <string.h>
+#include <function.h>
 #include <Lunix/kernel/kernel.h>
 #include <stdint.h>
 #include "keyboard.h"

@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <Lunix/timer.h>
 #include <Lunix/kernel/isr.h>
 #include <Lunix/ports.h>
-#include "../libc/function.h"
+#include <function.h>
 
 uint32_t tick = 0;
 

@@ -30,7 +30,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <Lunix/console.h>
 #include <Lunix/keyboard.h>
-#include "../libc/string.h"
 
 void config_x86(){
 

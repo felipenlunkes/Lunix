@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <Lunix/console.h>
 #include <Lunix/ports.h>
-#include "../libc/mem.h"
+#include <mem.h>
 #include <stdint.h>
 
 /* Declaration of private functions */
