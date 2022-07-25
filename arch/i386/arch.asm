@@ -1,4 +1,3 @@
-;; Copyright (c) 2018, Carlos Fenollosa
 ;; Copyright (c) 2022, Felipe Miguel Nery Lunkes
 ;; All rights reserved.
 
