@@ -51,9 +51,11 @@ int setUser=0;
 
 // Start the Lunix kernel monitor task
 
-    LXmonitor();
+    LXmonitor("root");
 
     yield();
+
+    for (;;);
 
 }
 

@@ -36,26 +36,28 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <Lunix/ports.h>
 #include <stdint.h>
 
+extern setCS();
+
 void halt(void){
 
-    asm ("hlt");
+  asm ("hlt");
     
 }
 
 void disable(void){
 
-    asm ("cli");
+  asm ("cli");
 
 }
 
 void enable(void){
 
-    asm ("sti");
+  asm ("sti");
 
 }
 
 void nop(void){
 
-    asm ("nop");
+  asm ("nop");
 
 }

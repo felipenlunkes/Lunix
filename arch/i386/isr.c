@@ -151,11 +151,13 @@ void isr_install() {
     set_idt_gate(47, (uint32_t)irq15);
 
     set_idt(); // Load with ASM
+
 }
 
 /* To print the message which defines every exception */
 
 char *exception_messages[] = {
+
     "Division By Zero",
     "Debug",
     "Non Maskable Interrupt",
@@ -191,6 +193,7 @@ char *exception_messages[] = {
     "Reserved",
     "Reserved",
     "Reserved"
+
 };
 
 void isr_handler(registers_t *r) {
@@ -238,13 +241,9 @@ void irq_install() {
 
     kprint("\nInstalling the interrupt routines...");
 
-    /* Enable interruptions */
-
-    asm volatile("sti");
-
     /* IRQ0: timer */
 
-    init_timer(50);
+     init_timer(50);
 
     /* IRQ1: keyboard */
 
