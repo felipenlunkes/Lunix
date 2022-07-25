@@ -39,11 +39,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 void kern_main() {
 
-    kprint("\nLunix kernel version ");
+    kprint("Lunix kernel version ");
     kprint(LUNIX_VERSION);
     kprint("\nCopyright (c) 2022 Felipe Miguel Nery Lunkes\n");
 
-    config_x86();
+    LXset_processor();
     isr_install();
     irq_install();
     init_COM1();

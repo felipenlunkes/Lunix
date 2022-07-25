@@ -1,5 +1,4 @@
 /*
-Copyright (c) 2018, Carlos Fenollosa
 Copyright (c) 2022, Felipe Miguel Nery Lunkes
 All rights reserved.
 
@@ -51,7 +50,7 @@ int setUser=0;
 
 // Start the Lunix kernel monitor task
 
-    LXmonitor("root");
+    LXmonitor();
 
     yield();
 
@@ -59,7 +58,7 @@ int setUser=0;
 
 }
 
-void LXmonitor(char *input) {
+void LXmonitor(void) {
 
     char keybbuffer[BUFFER];
 	int command = 0;
@@ -102,16 +101,16 @@ void LXmonitor(char *input) {
 
             else if (strcmp(keybbuffer, "HELP") == 0) {
 
-            kprint("\nThe kernel monitor allows you to:\n");
+            kprint("\n\nThe kernel monitor allows you to:\n");
             kprint("\n1: Test kernel functions");
             kprint("\n2: Test the hardware response");
-            kprint("\nTry type 'CMD' to see the available commands.\n\n");
+            kprint("\nTry type 'CMD' to see the available commands.\n");
     
             }
 
             else if (strcmp(keybbuffer, "CMD") == 0) {
 
-            kprint("\nAvailable Lunix monitor commands:\n");
+            kprint("\n\nAvailable Lunix monitor commands:\n");
             kprint("\nPANIC      - Force a kernel panic");
             kprint("\nKMALLOC    - Test the Lunix kmalloc()");
             kprint("\nHELP       - See the help");
@@ -119,7 +118,7 @@ void LXmonitor(char *input) {
             kprint("\nREBOOT     - Reboot the device");
             kprint("\nSHUTDOWN   - Shutdown the device");
             kprint("\nUSER       - See who are logged in");
-            kprint("\nCLEAR      - Clear the screen\n\n");
+            kprint("\nCLEAR      - Clear the screen\n");
     
             }
 
@@ -137,10 +136,11 @@ void LXmonitor(char *input) {
 
             else if (strcmp(keybbuffer, "USER") == 0) {
 
-            int userID=LXget_userID(1);
+            char *userID=LXget_user(1);
 
-            kprint("\nUser ID: ");
+            kprint("\n\nUser ID: ");
             kprint(userID);
+            kprint("\n");
 
             }
 

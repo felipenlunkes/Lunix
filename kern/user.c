@@ -47,16 +47,11 @@ int tty;
 int LXid_user(int tty){
 
 
-
 }
 
 char *LXget_user(int tty){
 
-    char *user[64];
-
-    memory_copy(user, users[tty].name, 64);
-
-    return user;
+    return users[tty].name;
 
 }
 
@@ -73,7 +68,7 @@ void LXset_user(int tty, char *name, int ID, int groupID){
     kprint("' logged in.\n");
 
     users[tty].tty=tty;
-    memory_copy(users[tty].name, *name, 15);
+    strcpy(users[tty].name, name);
     users[tty].ID=ID;
     users[tty].groupID=groupID;
 

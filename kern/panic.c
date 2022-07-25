@@ -37,6 +37,6 @@ void panic(char *message){
     kprint("\n[Lunix kernel] Panic: ");
     kprint(message);
 
-    asm volatile("hlt");
+    halt();
 
 }
