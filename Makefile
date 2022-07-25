@@ -17,28 +17,30 @@ AS = = /usr/local/lunixgcc/bin/i386-elf-as
 
 # -g: Use debugging symbols in gcc
 
-CFLAGS = -g -ffreestanding -Wall -Wextra -fno-exceptions -m32 -gdwarf-4 -Iinc/
+CFLAGS = -g -ffreestanding -Wall -Wextra -fno-exceptions -m32 -gdwarf-4 -Iinc/ -Wl,--build-id=none
 
-# First rule is run by default
+lunix.bin: boot/LXboot.o ${OBJ} ${ASM} ${SAS}
+	i386-elf-ld -T kern/kern.ld -melf_i386 -o $@ $^ 
 
-lunix.img: boot/LXboot.bin lunix.bin
-	cat $^ > lunix.img
-
-# '--oformat binary' deletes all symbols as a collateral, so we don't need
-# to 'strip' them manually on this case
-
-lunix.bin: arch/i386/kentry.o ${OBJ} ${ASM} ${SAS}
-	i386-elf-ld -o $@ -Ttext 0x1000 $^ --oformat binary
-
-# Used for debugging purposes
-
-lunix.elf: arch/i386/kentry.o ${OBJ} ${ASM}
-	i386-elf-ld -o $@ -Ttext 0x1000 $^ 
-
-run: lunix.bin
-	qemu-system-i386 -fda lunix.img --enable-kvm
+run: img 
+	qemu-system-i386 -cdrom lunix.iso --enable-kvm
 
 # Open the connection to qemu and load our kernel-object file with symbols
+
+img: lunix.bin
+	mkdir lunix
+	mkdir lunix/boot
+	mkdir lunix/boot/grub
+	cp lunix.bin lunix/boot/lunix.bin
+	echo "set timeout=10"                    >> lunix/boot/grub/grub.cfg
+	echo "set default=0"                     >> lunix/boot/grub/grub.cfg
+	echo ""                                  >> lunix/boot/grub/grub.cfg
+	echo 'menuentry "Lunix OS" {'            >> lunix/boot/grub/grub.cfg
+	echo "  multiboot /boot/lunix.bin"       >> lunix/boot/grub/grub.cfg
+	echo "  boot"                            >> lunix/boot/grub/grub.cfg
+	echo "}"                                 >> lunix/boot/grub/grub.cfg
+	grub-mkrescue --output=lunix.iso lunix
+	rm -rf lunix
 
 debug: lunix.bin kernel.elf
 	qemu-system-i386 -s -fda lunix.img -d guest_errors,int &
@@ -51,14 +53,14 @@ debug: lunix.bin kernel.elf
 	${CC} ${CFLAGS} -c $< -o $@
 
 %.o: %.asm
-	nasm $< -f elf -o $@
+	nasm $< -f elf32 -o $@
 
 %.o: %.s
-	${CC} -c $< -o $@ 
+	as --32 $< -o $@ 
 
 %.bin: %.asm
-	nasm $< -f bin -o $@
+	nasm $< -f elf32 -o $@
 
 clean:
-	rm -rf *.bin *.dis *.o lunix.bin *.elf *.img
+	rm -rf *.bin *.dis *.o lunix.bin *.elf *.img *.iso
 	rm -rf kern/*.o boot/*.bin drivers/*/*.o boot/*.o arch/*/*.o libc/*.o
