@@ -36,6 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 uint8_t port_byte_in (uint16_t port) {
+
     uint8_t result;
 
     /* Inline assembler syntax

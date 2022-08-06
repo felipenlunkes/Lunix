@@ -28,40 +28,16 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <Lunix/kernel/kernel.h>
-#include <Lunix/kernel/thread.h>
-#include <stdint.h>
+#include <Lunix/console.h>
 
-void LXinit_user_task();
+extern gdt_install();
 
-static void kernel_thread() {
-    
-    kprint("\nkernel_thread: PID 0 started");
+LXset_gdt(){
 
-    yield();
+    kprint("\nInstalling GDT...");
 
-}
+    gdt_install();
 
-void initTasking(){
-
-    kprint("\nInitializing threading...");
-
-    exec(kernel_thread, 0);
-
-	  kprint(" [done]");
-
-    kprint("\nCreating the kernel thread...");
-
-	  kprint(" [done]");
-
-    yield();
-
-    kprint("\nCreating the first thread (PID 1)...");
-
-    exec(LXinit_user_task, 1);
-
-	  kprint(" [done]");
-    
-    yield();
+    kprint(" [done]");
 
 }

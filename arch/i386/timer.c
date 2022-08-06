@@ -64,6 +64,8 @@ void init_timer(uint32_t freq) {
     port_byte_out(0x40, low);
     port_byte_out(0x40, high);
     
+	  kprint(" [done]");
+
     kprint("\nThe timer has been set to 120 MHz.");
     
 }

@@ -36,4 +36,6 @@ void init_COM1(){
 
     extern initCOM1();
 
+	  kprint(" [done]");
+    
 }

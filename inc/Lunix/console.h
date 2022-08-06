@@ -19,4 +19,19 @@ void kprint_at(char *message, int col, int row);
 void kprint(char *message);
 void kprint_backspace();
 
+struct Cursor
+{
+    
+	unsigned char x;
+	unsigned char y;
+	unsigned short colour;
+
+};
+
+void cls();
+void setcur(unsigned char, unsigned char);
+void putch(const char);
+void puts(const char*);
+
+
 #endif

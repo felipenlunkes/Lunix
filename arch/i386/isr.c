@@ -67,6 +67,10 @@ typedef struct {
 /* A pointer to the array of interrupt handlers.
  * Assembly instruction 'lidt' will read it */
 
+void set_idt_gate(int n, uint32_t handler);
+
+extern void set_idt();
+
 typedef struct {
 
     uint16_t limit;
@@ -83,8 +87,8 @@ isr_t interrupt_handlers[256];
 
 void isr_install() {
 
-    kprint("\nInitializing the ISR...");
-
+    kprint("\nInstalling the interrupt routines...");
+    
     set_idt_gate(0, (uint32_t)isr0);
     set_idt_gate(1, (uint32_t)isr1);
     set_idt_gate(2, (uint32_t)isr2);
@@ -118,19 +122,6 @@ void isr_install() {
     set_idt_gate(30, (uint32_t)isr30);
     set_idt_gate(31, (uint32_t)isr31);
 
-    // Remap the PIC
-
-    port_byte_out(0x20, 0x11);
-    port_byte_out(0xA0, 0x11);
-    port_byte_out(0x21, 0x20);
-    port_byte_out(0xA1, 0x28);
-    port_byte_out(0x21, 0x04);
-    port_byte_out(0xA1, 0x02);
-    port_byte_out(0x21, 0x01);
-    port_byte_out(0xA1, 0x01);
-    port_byte_out(0x21, 0x0);
-    port_byte_out(0xA1, 0x0); 
-
     // Install the IRQs
 
     set_idt_gate(32, (uint32_t)irq0);
@@ -151,6 +142,8 @@ void isr_install() {
     set_idt_gate(47, (uint32_t)irq15);
 
     set_idt(); // Load with ASM
+
+	kprint(" [done]");
 
 }
 
@@ -198,7 +191,7 @@ char *exception_messages[] = {
 
 void isr_handler(registers_t *r) {
 
-    kprint("received interrupt: ");
+    kprint("\nKern: received interrupt ");
 
     char s[3];
 
@@ -239,8 +232,6 @@ void irq_handler(registers_t *r) {
 
 void irq_install() {
 
-    kprint("\nInstalling the interrupt routines...");
-
     /* IRQ0: timer */
 
      init_timer(50);
@@ -248,5 +239,9 @@ void irq_install() {
     /* IRQ1: keyboard */
 
     init_keyboard();
+
+	kprint("\nKernel services started successfully...");
+
+    kprint(" [done]");
 
 }

@@ -28,40 +28,69 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <Lunix/kernel/kernel.h>
-#include <Lunix/kernel/thread.h>
-#include <stdint.h>
+char *dtoc(int value, char buf[])
+{
+	char hex[18] = "0123456789ABCDEFNS";
+	
+	if( !((value >= 0) && (value <= 15)) )
+	{
 
-void LXinit_user_task();
+		if(value < 0)
+		{
 
-static void kernel_thread() {
-    
-    kprint("\nkernel_thread: PID 0 started");
+			buf[0] = hex[16];
 
-    yield();
+			return buf;
+
+		}
+
+		else
+		{
+
+			buf[0] = hex[17];
+
+			return buf;
+
+		}
+
+	}
+	
+	buf[0] = hex[value];
+
+	return buf;
 
 }
 
-void initTasking(){
+char *itoa(long value, char buf[], int base)
+{
 
-    kprint("\nInitializing threading...");
+	long current = value;
+	int pos = 0;
+	base--; /* Bases will implemented later - stop GCC complaining! */
+	int digits[9] = {0};
+	
+	while(current)
+	{
 
-    exec(kernel_thread, 0);
+		digits[pos] = current % 16;
+		current /= 16;
+		pos++;
 
-	  kprint(" [done]");
+	}
 
-    kprint("\nCreating the kernel thread...");
+	char mbuf[1];
 
-	  kprint(" [done]");
+	for(int i = 8; i >= 0; i--)
+	{
 
-    yield();
+		int pos = 8 - i;
 
-    kprint("\nCreating the first thread (PID 1)...");
+		dtoc(digits[pos], mbuf);
 
-    exec(LXinit_user_task, 1);
+		buf[i] = mbuf[0];
 
-	  kprint(" [done]");
-    
-    yield();
-
+	}
+	
+	return buf;
+	
 }

@@ -36,9 +36,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 void LXreboot(void){
 
-    kprint("\nRebootinh the computer...");
+    kprint("\nRebooting the computer...");
 
     doReboot();
+
+    kprint(" [done]");
 
 }
 

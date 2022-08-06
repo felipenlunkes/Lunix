@@ -39,17 +39,24 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 void kern_main() {
 
-    kprint("Lunix kernel version ");
-    kprint(LUNIX_VERSION);
-    kprint("\nCopyright (c) 2022 Felipe Miguel Nery Lunkes\n");
+  kprint("Lunix kernel version ");
+  kprint(LUNIX_VERSION);
+  kprint("\nCopyright (c) 2022 Felipe Miguel Nery Lunkes\n");
 
-    LXset_processor();
-    isr_install();
-    irq_install();
-    init_COM1();
-    init_Parallel();
+  LXset_gdt();
+  LXset_processor();
+  remapPIC();
+  setupIDT();
 
-    initTasking();
+  /* We need to disable PIC at this moment */
+
+  pic_disable();
+
+  init_COM1();
+  init_Parallel();
+  enable();
+
+  initTasking();
 
 }
 

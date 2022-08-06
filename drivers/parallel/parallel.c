@@ -35,5 +35,7 @@ void init_Parallel(){
     kprint("\nInitializing parallel ports (imp0)...");
 
     extern initParallel();
+    
+	  kprint(" [done]");
 
 }

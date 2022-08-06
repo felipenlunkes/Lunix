@@ -52,12 +52,44 @@ void disable(void){
 
 void enable(void){
 
-  asm ("sti");
+  asm volatile ("sti");
 
 }
 
 void nop(void){
 
   asm ("nop");
+
+}
+
+void outportb(unsigned short port, unsigned char val)
+{
+
+	asm volatile("outb %0,%1"::"a"(val), "Nd"(port));
+
+}
+
+void outportw(unsigned short port, unsigned short val)
+{
+
+	asm volatile("outw %0,%1"::"a"(val), "Nd" (port));
+
+}
+
+unsigned char inportb(unsigned short port)
+{
+
+	unsigned char ret;
+
+	asm volatile("inb %1,%0":"=a"(ret):"Nd"(port));
+
+	return ret;
+
+}
+
+void HaltProcessor()
+{
+
+	asm volatile("hlt");
 
 }

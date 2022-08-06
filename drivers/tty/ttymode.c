@@ -28,40 +28,118 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <Lunix/kernel/kernel.h>
-#include <Lunix/kernel/thread.h>
-#include <stdint.h>
+#include <Lunix/console.h>
+#include <Lunix/type.h>
 
-void LXinit_user_task();
+struct Cursor CursorPos;
 
-static void kernel_thread() {
-    
-    kprint("\nkernel_thread: PID 0 started");
+void cls()
+{
 
-    yield();
+	setcur(0, 0);
+	memsetw((unsigned short*) 0xB8000, ((unsigned char) 0x20 | 0x0700), 2000);
 
 }
 
-void initTasking(){
+void setcur(unsigned char x, unsigned char y)
+{
 
-    kprint("\nInitializing threading...");
+	CursorPos.x = x;
+	CursorPos.y = y;
 
-    exec(kernel_thread, 0);
+	unsigned int index = (80 * y) + x;
 
-	  kprint(" [done]");
+	outportb(0x3D4, 14);
+	outportb(0x3D5, index >> 8);
+	outportb(0x3D4, 15);
+	outportb(0x3D5, index);
 
-    kprint("\nCreating the kernel thread...");
+}
 
-	  kprint(" [done]");
+void putch(const char c)
+{
 
-    yield();
+	if(c == 0x00)
+	{
 
-    kprint("\nCreating the first thread (PID 1)...");
+		return;
 
-    exec(LXinit_user_task, 1);
+	}
+	
+	if(c == (unsigned char) '\n')
+	{
 
-	  kprint(" [done]");
-    
-    yield();
+		setcur(0, CursorPos.y + 1);
 
+		return;
+
+	}
+
+	if(c == (unsigned char) '\b')
+	{
+
+		if(CursorPos.x == 0)
+		{
+
+			if(CursorPos.y >= 8)
+			{
+
+				setcur(79, (CursorPos.y - 1));
+
+			}
+
+			else
+			{
+
+				return;
+
+			}
+		}
+
+		else
+		{
+
+			setcur((CursorPos.x - 1), CursorPos.y);
+
+		}
+
+		unsigned short location = 80 * (unsigned short) CursorPos.y;
+		location += (unsigned short) CursorPos.x;
+
+		memsetw(((unsigned short*) 0xB8000 + location), 0, 1);
+
+		return;
+
+	}
+	
+	unsigned short location = 80 * (unsigned short) CursorPos.y;
+	location += (unsigned short) CursorPos.x;
+
+	unsigned short character = c | CursorPos.colour;
+	
+	memsetw(((unsigned short*) 0xB8000 + location), character, 1);
+
+	setcur(CursorPos.x + 1, CursorPos.y);
+
+	if(CursorPos.x >= 80)
+	{
+
+		setcur(0, CursorPos.y + 1);
+
+	}
+	
+}
+
+void puts(const char *s)
+{
+
+	size_t len = strlen(s);
+	
+	for(int i = 0; i < len; i++)
+	{
+
+		putch(s[i]);
+
+	}
+	
 }
