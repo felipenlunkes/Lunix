@@ -43,20 +43,24 @@ void kern_main() {
   kprint(LUNIX_VERSION);
   kprint("\nCopyright (c) 2022 Felipe Miguel Nery Lunkes\n");
 
-  LXset_gdt();
-  LXset_processor();
+  LXset_gdt();       // Install the GDT
+  LXset_processor(); // Setting up processor features
+
   remapPIC();
   setupIDT();
 
-  /* We need to disable PIC at this moment */
+  init_keyboard();
+
+  // We need to disable PIC at this moment
 
   pic_disable();
 
-  init_COM1();
-  init_Parallel();
-  enable();
+  init_COM1(); // Serial port init
+  init_Parallel(); // Parallel port init
 
-  initTasking();
+  enable(); // Enable interrupts
+
+  initTasking(); // Schedule
 
 }
 

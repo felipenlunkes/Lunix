@@ -28,6 +28,14 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <Lunix/keyboard.h>
+#include <Lunix/ports.h>
+#include <Lunix/kernel/isr.h>
+#include <Lunix/console.h>
+#include <string.h>
+#include <function.h>
+#include <Lunix/kernel/kernel.h>
+#include <stdint.h>
 #include <Lunix/io.h>
 #include <Lunix/kernel/descriptors.h>
 
@@ -40,6 +48,7 @@ void setupIDT()
 	IDTPtr.base = (unsigned int) &IDT;
 
 	memset((unsigned char *)&IDT, 0x00, sizeof(struct IDTEntry) * 256);
+
 	struct IDTEncode *entry;
 	
 	entry->base = (unsigned) ISR0;
@@ -102,6 +111,7 @@ void setupIDT()
 	EncodeIDTEntry(18, entry);
 
 	entry->base = (unsigned) ISRReserved;
+
 	for(int index = 19; index < 32; index++)
 	{
 
@@ -109,7 +119,9 @@ void setupIDT()
 
 	}
 
-	entry->base = (unsigned) irq0;
+	extern keyboard_callback(registers_t *regs);
+
+	entry->base = (unsigned) *keyboard_callback;
 	EncodeIDTEntry(32, entry);
 
 	entry->base = (unsigned) irq1;

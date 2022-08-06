@@ -88,7 +88,7 @@ uint8_t scanf(void) {
 
 }
 
-static void keyboard_callback(registers_t *regs) {
+void keyboard_callback(registers_t *regs) {
 
     /* The PIC leaves us the scancode in port 0x60 */
 
