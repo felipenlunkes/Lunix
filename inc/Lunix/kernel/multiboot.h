@@ -1,5 +1,4 @@
 /*
-Copyright (c) 2018, Carlos Fenollosa
 Copyright (c) 2022, Felipe Miguel Nery Lunkes
 All rights reserved.
 
@@ -29,35 +28,53 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <mem.h>
+#ifndef MULTIBOOT_H
+#define MULTIBOOT_H
 
-void memory_copy(uint8_t *source, uint8_t *dest, int nbytes) {
+#include "common.h"
 
-    int i;
+#define MULTIBOOT_FLAG_MEM     0x001
+#define MULTIBOOT_FLAG_DEVICE  0x002
+#define MULTIBOOT_FLAG_CMDLINE 0x004
+#define MULTIBOOT_FLAG_MODS    0x008
+#define MULTIBOOT_FLAG_AOUT    0x010
+#define MULTIBOOT_FLAG_ELF     0x020
+#define MULTIBOOT_FLAG_MMAP    0x040
+#define MULTIBOOT_FLAG_CONFIG  0x080
+#define MULTIBOOT_FLAG_LOADER  0x100
+#define MULTIBOOT_FLAG_APM     0x200
+#define MULTIBOOT_FLAG_VBE     0x400
 
-    for (i = 0; i < nbytes; i++) {
-
-        *(dest + i) = *(source + i);
-
-    }
-}
-
-void memory_set(uint8_t *dest, uint8_t val, uint32_t len) {
-
-    uint8_t *temp = (uint8_t *)dest;
-
-    for ( ; len != 0; len--) *temp++ = val;
-
-}
-
-
-unsigned short *memsetw(unsigned short *dest, unsigned short val, size_t count)
+struct multiboot
 {
-	unsigned short *ret = (unsigned short*) dest;
-	while(count-- != 0)
-	{
-		*dest++ = val;
-	}
 
-	return ret;
-}
+    u32int flags;
+    u32int mem_lower;
+    u32int mem_upper;
+    u32int boot_device;
+    u32int cmdline;
+    u32int mods_count;
+    u32int mods_addr;
+    u32int num;
+    u32int size;
+    u32int addr;
+    u32int shndx;
+    u32int mmap_length;
+    u32int mmap_addr;
+    u32int drives_length;
+    u32int drives_addr;
+    u32int config_table;
+    u32int boot_loader_name;
+    u32int apm_table;
+    u32int vbe_control_info;
+    u32int vbe_mode_info;
+    u32int vbe_mode;
+    u32int vbe_interface_seg;
+    u32int vbe_interface_off;
+    u32int vbe_interface_len;
+    
+}  __attribute__((packed));
+
+typedef struct multiboot_header multiboot_header_t;
+
+#endif

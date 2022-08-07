@@ -32,23 +32,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <string.h>
 #include <stdint.h>
 
-/**
- * K&R implementation
- */
-
-char *strcpy(char *dest, const char *src)
-{
-
-    char *tmp = dest;
-
-    while ((*dest++ = *src++) != 0)
-
-        ;
-
-    return tmp;
-
-}
-
 void int_to_ascii(int n, char str[]) {
 
     int i, sign;
@@ -118,17 +101,6 @@ void reverse(char s[]) {
 
 }
 
-/* K&R */
-
-int strlen(char s[]) {
-
-    int i = 0;
-
-    while (s[i] != '\0') ++i;
-
-    return i;
-
-}
 
 char *ctos(char sstring[2], const char c)
 {
@@ -157,18 +129,3 @@ void backspace(char s[]) {
 
 }
 
-/* K&R 
- * Returns <0 if s1<s2, 0 if s1==s2, >0 if s1>s2 */
-
-int strcmp(char s1[], char s2[]) {
-    int i;
-
-    for (i = 0; s1[i] == s2[i]; i++) {
-
-        if (s1[i] == '\0') return 0;
-
-    }
-
-    return s1[i] - s2[i];
-
-}

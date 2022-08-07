@@ -29,7 +29,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include <Lunix/kernel/kernel.h>
-#include <Lunix/kernel/isr.h>
 #include <Lunix/kernel/thread.h>
 #include <stdint.h>
 
@@ -77,6 +76,6 @@ void yield() {
     Task *last = runningTask;
     runningTask = runningTask->next;
 
-    switchTask(&last->regs, &runningTask->regs);
+   // switchTask(&last->regs, &runningTask->regs);
 
 }

@@ -1,5 +1,4 @@
 /*
-Copyright (c) 2018, Carlos Fenollosa
 Copyright (c) 2022, Felipe Miguel Nery Lunkes
 All rights reserved.
 
@@ -29,35 +28,29 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <mem.h>
+#ifndef MONITOR_H
+#define MONITOR_H
 
-void memory_copy(uint8_t *source, uint8_t *dest, int nbytes) {
+#include "common.h"
 
-    int i;
+// Write a single character out to the screen.
 
-    for (i = 0; i < nbytes; i++) {
+void monitor_put(char c);
 
-        *(dest + i) = *(source + i);
+// Clear the screen to all black.
 
-    }
-}
+void monitor_clear();
 
-void memory_set(uint8_t *dest, uint8_t val, uint32_t len) {
+// Output a null-terminated ASCII string to the monitor.
 
-    uint8_t *temp = (uint8_t *)dest;
+void monitor_write(char *c);
 
-    for ( ; len != 0; len--) *temp++ = val;
+// Output a hex value to the monitor.
 
-}
+void monitor_write_hex(u32int n);
 
+// Output a decimal value to the monitor.
 
-unsigned short *memsetw(unsigned short *dest, unsigned short val, size_t count)
-{
-	unsigned short *ret = (unsigned short*) dest;
-	while(count-- != 0)
-	{
-		*dest++ = val;
-	}
+void monitor_write_dec(u32int n);
 
-	return ret;
-}
+#endif // MONITOR_H

@@ -1,5 +1,4 @@
 /*
-Copyright (c) 2018, Carlos Fenollosa
 Copyright (c) 2022, Felipe Miguel Nery Lunkes
 All rights reserved.
 
@@ -29,35 +28,11 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <mem.h>
+#ifndef TIMER_H
+#define TIMER_H
 
-void memory_copy(uint8_t *source, uint8_t *dest, int nbytes) {
+#include "common.h"
 
-    int i;
+void init_timer(u32int frequency);
 
-    for (i = 0; i < nbytes; i++) {
-
-        *(dest + i) = *(source + i);
-
-    }
-}
-
-void memory_set(uint8_t *dest, uint8_t val, uint32_t len) {
-
-    uint8_t *temp = (uint8_t *)dest;
-
-    for ( ; len != 0; len--) *temp++ = val;
-
-}
-
-
-unsigned short *memsetw(unsigned short *dest, unsigned short val, size_t count)
-{
-	unsigned short *ret = (unsigned short*) dest;
-	while(count-- != 0)
-	{
-		*dest++ = val;
-	}
-
-	return ret;
-}
+#endif

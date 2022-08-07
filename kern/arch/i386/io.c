@@ -28,95 +28,61 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <Lunix/kernel/monitor.h>
 #include <Lunix/console.h>
-#include <Lunix/kernel/descriptor_tables.h>
-#include <Lunix/kernel/timer.h>
-#include <Lunix/kernel/paging.h>
-#include <Lunix/kernel/multiboot.h>
-#include <Lunix/kernel/fs.h>
-#include <Lunix/kernel/initrd.h>
-#include <Lunix/kernel/task.h>
-#include <Lunix/kernel/syscall.h>
-#include <Lunix/kernel/version.h>
+#include <string.h>
+#include <mem.h>
+#include <Lunix/kernel/kernel.h>
+#include <Lunix/kernel/thread.h>
+#include <Lunix/ports.h>
+#include <stdint.h>
 
-void ls_initrd(void)
-{
+extern setCS();
 
-    monitor_write("\nOpening the initrd...\n");
+void halt(void){
 
-// Contents of /
-
-    int i = 0;
-    struct dirent *node = 0;
-
-    while ( (node = readdir_fs(fs_root, i)) != 0)
-    {
-
-    monitor_write(" > Found file ");
-    monitor_write(node->name);
-
-    fs_node_t *fsnode = finddir_fs(fs_root, node->name);
-
-    if ((fsnode->flags&0x7) == FS_DIRECTORY)
-    monitor_write(" (directory)\n");
-
-  i++;
-
-}
-
-}
-
-void ls_initrd_files(void)
-{
-
-    monitor_write("\nOpening the initrd files...\n");
+  asm ("hlt");
     
-// Contents of /
+}
 
-    int i = 0;
-    struct dirent *node = 0;
+void disable(void){
 
-    while ( (node = readdir_fs(fs_root, i)) != 0)
-    {
-
-    monitor_write("Found file ");
-    monitor_write(node->name);
-
-    fs_node_t *fsnode = finddir_fs(fs_root, node->name);
-
-    if ((fsnode->flags&0x7) == FS_DIRECTORY)
-    monitor_write(" (directory)\n");
-
-    else
-    {
-
-    monitor_write("\n\t contents: \"");
-
-    char buf[256];
-
-    u32int sz = read_fs(fsnode, 0, 256, buf);
-
-    int j;
-
-    for (j = 0; j < sz; j++)
-
-      monitor_put(buf[j]);
-
-    monitor_write("\"\n");
-
-  }
-
-  i++;
+  asm ("cli");
 
 }
 
+void enable(void){
+
+  asm volatile ("sti");
+
 }
 
-void initialise_devices(void){
+void nop(void){
 
-  init_COM1(); // Serial port init
-  init_Parallel(); // Parallel port init
-  init_keyboard();
+  asm volatile ("nop");
+
+}
+
+void outportb(unsigned short port, unsigned char val)
+{
+
+	asm volatile("outb %0,%1"::"a"(val), "Nd"(port));
+
+}
+
+void outportw(unsigned short port, unsigned short val)
+{
+
+	asm volatile("outw %0,%1"::"a"(val), "Nd" (port));
+
+}
+
+unsigned char inportb(unsigned short port)
+{
+
+	unsigned char ret;
+
+	asm volatile("inb %1,%0":"=a"(ret):"Nd"(port));
+
+	return ret;
 
 }

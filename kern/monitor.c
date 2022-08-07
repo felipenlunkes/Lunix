@@ -28,35 +28,13 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <Lunix/console.h>
+#include <Lunix/kernel/monitor.h>>
 #include <string.h>
 #include <mem.h>
 #include "Lunix/kernel/keyboard.h"
-#include <Lunix/kernel/kernel.h>
-#include <Lunix/kernel/thread.h>
 #include <stdint.h>
 
 #define BUFFER 64
-
-void LXinit_user_task(){
-
-int setUser=0;
-
-    kprint("\n\nWelcome to the Lunix kernel monitor prompt\n");
-
-    LXset_user(1, "root", 777, 1);
-
-    kprint("\n");
-
-// Start the Lunix kernel monitor task
-
-    LXmonitor();
-
-    yield();
-
-    for (;;);
-
-}
 
 void LXmonitor(void) {
 
@@ -66,18 +44,22 @@ void LXmonitor(void) {
 
     strcpy(&keybbuffer[strlen(keybbuffer)], "");
 
-    kprint("Lunix > ");
+    monitor_write("\n\nWelcome to the Lunix ksh!\n\n");
+
+    monitor_write("Lunix > ");
     
     while (1)
 	{
+
 		while (letter = scanf())
 		{
+        
 			if (letter == ENTER)
 			{
 
             if (strcmp(keybbuffer, "PANIC") == 0) {
 
-            panic("the user forced a kernel panic. Reboot\n");
+            PANIC("the user forced a kernel panic. Reboot the device to continue...");
 
             } else if (strcmp(keybbuffer, "KMALLOC") == 0) {
 
@@ -91,34 +73,34 @@ void LXmonitor(void) {
        
             hex_to_ascii(phys_addr, phys_str);
        
-            kprint("\n\nPage: ");
-            kprint(page_str);
-            kprint(", physical address: ");
-            kprint(phys_str);
-            kprint("\n");
+            monitor_write("\n\nPage: ");
+            monitor_write(page_str);
+            monitor_write(", physical address: ");
+            monitor_write(phys_str);
+            monitor_write("\n");
 
             }
 
             else if (strcmp(keybbuffer, "HELP") == 0) {
 
-            kprint("\n\nThe kernel monitor allows you to:\n");
-            kprint("\n1: Test kernel functions");
-            kprint("\n2: Test the hardware response");
-            kprint("\nTry type 'CMD' to see the available commands.\n");
+            monitor_write("\n\nThe kernel monitor allows you to:\n");
+            monitor_write("\n1: Test kernel functions");
+            monitor_write("\n2: Test the hardware response");
+            monitor_write("\nTry type 'CMD' to see the available commands.\n");
     
             }
 
             else if (strcmp(keybbuffer, "CMD") == 0) {
 
-            kprint("\n\nAvailable Lunix monitor commands:\n");
-            kprint("\nPANIC      - Force a kernel panic");
-            kprint("\nKMALLOC    - Test the Lunix kmalloc()");
-            kprint("\nHELP       - See the help");
-            kprint("\nCMD        - View this help");
-            kprint("\nREBOOT     - Reboot the device");
-            kprint("\nSHUTDOWN   - Shutdown the device");
-            kprint("\nUSER       - See who are logged in");
-            kprint("\nCLEAR      - Clear the screen\n");
+            monitor_write("\n\nAvailable Lunix monitor commands:\n");
+            monitor_write("\nPANIC      - Force a kernel panic");
+            monitor_write("\nKMALLOC    - Test the Lunix kmalloc()");
+            monitor_write("\nHELP       - See the help");
+            monitor_write("\nCMD        - View this help");
+            monitor_write("\nREBOOT     - Reboot the device");
+            monitor_write("\nSHUTDOWN   - Shutdown the device");
+            monitor_write("\nUSER       - See who are logged in");
+            monitor_write("\nCLEAR      - Clear the screen\n");
     
             }
 
@@ -138,9 +120,9 @@ void LXmonitor(void) {
 
             char *userID=LXget_user(1);
 
-            kprint("\n\nUser ID: ");
-            kprint(userID);
-            kprint("\n");
+            monitor_write("\n\nUser ID: ");
+            monitor_write(userID);
+            monitor_write("\n");
 
             }
 
@@ -150,7 +132,7 @@ void LXmonitor(void) {
         
             }
 
-            kprint("\nLunix > ");
+            monitor_write("\nLunix > ");
 
 			memory_set(keybbuffer, 0, BUFFER);
 
@@ -171,7 +153,7 @@ void LXmonitor(void) {
 
 				s = ctos(s, c);
 
-				kprint(s);
+				monitor_write(s);
 
 				keybbuffer[strlen(keybbuffer) - 1] = '\0';
 
@@ -185,7 +167,7 @@ void LXmonitor(void) {
 
 				s = ctos(s, c);
 
-				kprint(s);
+				monitor_write(s);
 
 				strcpy(&keybbuffer[strlen(keybbuffer)], s);
 

@@ -28,95 +28,89 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <Lunix/kernel/monitor.h>
-#include <Lunix/console.h>
-#include <Lunix/kernel/descriptor_tables.h>
-#include <Lunix/kernel/timer.h>
-#include <Lunix/kernel/paging.h>
-#include <Lunix/kernel/multiboot.h>
 #include <Lunix/kernel/fs.h>
-#include <Lunix/kernel/initrd.h>
-#include <Lunix/kernel/task.h>
-#include <Lunix/kernel/syscall.h>
-#include <Lunix/kernel/version.h>
 
-void ls_initrd(void)
+fs_node_t *fs_root = 0; // The root of the filesystem.
+
+u32int read_fs(fs_node_t *node, u32int offset, u32int size, u8int *buffer)
 {
+    // Has the node got a read callback?
 
-    monitor_write("\nOpening the initrd...\n");
+    if (node->read != 0)
 
-// Contents of /
-
-    int i = 0;
-    struct dirent *node = 0;
-
-    while ( (node = readdir_fs(fs_root, i)) != 0)
-    {
-
-    monitor_write(" > Found file ");
-    monitor_write(node->name);
-
-    fs_node_t *fsnode = finddir_fs(fs_root, node->name);
-
-    if ((fsnode->flags&0x7) == FS_DIRECTORY)
-    monitor_write(" (directory)\n");
-
-  i++;
-
-}
-
-}
-
-void ls_initrd_files(void)
-{
-
-    monitor_write("\nOpening the initrd files...\n");
-    
-// Contents of /
-
-    int i = 0;
-    struct dirent *node = 0;
-
-    while ( (node = readdir_fs(fs_root, i)) != 0)
-    {
-
-    monitor_write("Found file ");
-    monitor_write(node->name);
-
-    fs_node_t *fsnode = finddir_fs(fs_root, node->name);
-
-    if ((fsnode->flags&0x7) == FS_DIRECTORY)
-    monitor_write(" (directory)\n");
+        return node->read(node, offset, size, buffer);
 
     else
-    {
 
-    monitor_write("\n\t contents: \"");
-
-    char buf[256];
-
-    u32int sz = read_fs(fsnode, 0, 256, buf);
-
-    int j;
-
-    for (j = 0; j < sz; j++)
-
-      monitor_put(buf[j]);
-
-    monitor_write("\"\n");
-
-  }
-
-  i++;
+        return 0;
 
 }
 
+u32int write_fs(fs_node_t *node, u32int offset, u32int size, u8int *buffer)
+{
+
+    // Has the node got a write callback?
+
+    if (node->write != 0)
+
+        return node->write(node, offset, size, buffer);
+
+    else
+
+        return 0;
+
 }
 
-void initialise_devices(void){
+void open_fs(fs_node_t *node, u8int read, u8int write)
+{
 
-  init_COM1(); // Serial port init
-  init_Parallel(); // Parallel port init
-  init_keyboard();
+    // Has the node got an open callback?
 
+    if (node->open != 0)
+
+        return node->open(node);
+
+}
+
+void close_fs(fs_node_t *node)
+{
+
+    // Has the node got a close callback?
+
+    if (node->close != 0)
+
+        return node->close(node);
+        
+}
+
+struct dirent *readdir_fs(fs_node_t *node, u32int index)
+{
+
+    // Is the node a directory, and does it have a callback?
+
+    if ( (node->flags&0x7) == FS_DIRECTORY &&
+         node->readdir != 0 )
+
+        return node->readdir(node, index);
+
+    else
+
+        return 0;
+
+}
+
+fs_node_t *finddir_fs(fs_node_t *node, char *name)
+{
+
+    // Is the node a directory, and does it have a callback?
+
+    if ( (node->flags&0x7) == FS_DIRECTORY &&
+         node->finddir != 0 )
+
+        return node->finddir(node, name);
+
+    else
+
+        return 0;
+        
 }

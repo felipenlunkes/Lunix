@@ -114,9 +114,10 @@ echo 'export PATH="$LUNIX/bin:$PATH"' >> /home/your_user/.bashrc
 
 ## Build the system
 
-To build Lunix, run make on the source folder. To do that, use:
+To build Lunix, run make on the kernel source folder. To do that, use:
 
 ```
+cd kern
 make
 ```
 

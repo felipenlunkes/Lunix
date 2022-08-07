@@ -1,5 +1,4 @@
 /*
-Copyright (c) 2018, Carlos Fenollosa
 Copyright (c) 2022, Felipe Miguel Nery Lunkes
 All rights reserved.
 
@@ -29,35 +28,70 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <mem.h>
+#ifndef ORDERED_ARRAY_H
+#define ORDERED_ARRAY_H
 
-void memory_copy(uint8_t *source, uint8_t *dest, int nbytes) {
+#include "common.h"
 
-    int i;
+/**
+   This array is insertion sorted - it always remains in a sorted state (between calls).
+   It can store anything that can be cast to a void* -- so a u32int, or any pointer.
+**/
 
-    for (i = 0; i < nbytes; i++) {
+typedef void* type_t;
 
-        *(dest + i) = *(source + i);
+/**
+   A predicate should return nonzero if the first argument is less than the second. Else 
+   it should return zero.
+**/
 
-    }
-}
+typedef s8int (*lessthan_predicate_t)(type_t,type_t);
 
-void memory_set(uint8_t *dest, uint8_t val, uint32_t len) {
-
-    uint8_t *temp = (uint8_t *)dest;
-
-    for ( ; len != 0; len--) *temp++ = val;
-
-}
-
-
-unsigned short *memsetw(unsigned short *dest, unsigned short val, size_t count)
+typedef struct
 {
-	unsigned short *ret = (unsigned short*) dest;
-	while(count-- != 0)
-	{
-		*dest++ = val;
-	}
 
-	return ret;
-}
+    type_t *array;
+    u32int size;
+    u32int max_size;
+    lessthan_predicate_t less_than;
+
+} ordered_array_t;
+
+/**
+   A standard less than predicate.
+**/
+
+s8int standard_lessthan_predicate(type_t a, type_t b);
+
+/**
+   Create an ordered array.
+**/
+
+ordered_array_t create_ordered_array(u32int max_size, lessthan_predicate_t less_than);
+ordered_array_t place_ordered_array(void *addr, u32int max_size, lessthan_predicate_t less_than);
+
+/**
+   Destroy an ordered array.
+**/
+
+void destroy_ordered_array(ordered_array_t *array);
+
+/**
+   Add an item into the array.
+**/
+
+void insert_ordered_array(type_t item, ordered_array_t *array);
+
+/**
+   Lookup the item at index i.
+**/
+
+type_t lookup_ordered_array(u32int i, ordered_array_t *array);
+
+/**
+   Deletes the item at location i from the array.
+**/
+
+void remove_ordered_array(u32int i, ordered_array_t *array);
+
+#endif // ORDERED_ARRAY_H

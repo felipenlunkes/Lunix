@@ -1,5 +1,4 @@
 /*
-Copyright (c) 2018, Carlos Fenollosa
 Copyright (c) 2022, Felipe Miguel Nery Lunkes
 All rights reserved.
 
@@ -29,35 +28,47 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <mem.h>
+#ifndef TASK_H
+#define TASK_H
 
-void memory_copy(uint8_t *source, uint8_t *dest, int nbytes) {
+#include "common.h"
+#include "paging.h"
 
-    int i;
+#define KERNEL_STACK_SIZE 2048       // Use a 2kb kernel stack.
 
-    for (i = 0; i < nbytes; i++) {
+// This structure defines a 'task' - a process.
 
-        *(dest + i) = *(source + i);
-
-    }
-}
-
-void memory_set(uint8_t *dest, uint8_t val, uint32_t len) {
-
-    uint8_t *temp = (uint8_t *)dest;
-
-    for ( ; len != 0; len--) *temp++ = val;
-
-}
-
-
-unsigned short *memsetw(unsigned short *dest, unsigned short val, size_t count)
+typedef struct task
 {
-	unsigned short *ret = (unsigned short*) dest;
-	while(count-- != 0)
-	{
-		*dest++ = val;
-	}
 
-	return ret;
-}
+    int id;                // Process ID.
+    u32int esp, ebp;       // Stack and base pointers.
+    u32int eip;            // Instruction pointer.
+    page_directory_t *page_directory; // Page directory.
+    u32int kernel_stack;   // Kernel stack location.
+    struct task *next;     // The next task in a linked list.
+
+} task_t;
+
+// Initialises the tasking system.
+
+void initialise_tasking();
+
+// Called by the timer hook, this changes the running process.
+
+void task_switch();
+
+// Forks the current process, spawning a new one with a different
+// memory space.
+
+int fork();
+
+// Causes the current process' stack to be forcibly moved to a new location.
+
+void move_stack(void *new_stack_start, u32int size);
+
+// Returns the pid of the current process.
+
+int getpid();
+
+#endif

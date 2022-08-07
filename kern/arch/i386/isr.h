@@ -1,5 +1,4 @@
 /*
-Copyright (c) 2018, Carlos Fenollosa
 Copyright (c) 2022, Felipe Miguel Nery Lunkes
 All rights reserved.
 
@@ -29,35 +28,40 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <mem.h>
+#include "common.h"
 
-void memory_copy(uint8_t *source, uint8_t *dest, int nbytes) {
+// A few defines to make life a little easier
 
-    int i;
+#define IRQ0 32
+#define IRQ1 33
+#define IRQ2 34
+#define IRQ3 35
+#define IRQ4 36
+#define IRQ5 37
+#define IRQ6 38
+#define IRQ7 39
+#define IRQ8 40
+#define IRQ9 41
+#define IRQ10 42
+#define IRQ11 43
+#define IRQ12 44
+#define IRQ13 45
+#define IRQ14 46
+#define IRQ15 47
 
-    for (i = 0; i < nbytes; i++) {
-
-        *(dest + i) = *(source + i);
-
-    }
-}
-
-void memory_set(uint8_t *dest, uint8_t val, uint32_t len) {
-
-    uint8_t *temp = (uint8_t *)dest;
-
-    for ( ; len != 0; len--) *temp++ = val;
-
-}
-
-
-unsigned short *memsetw(unsigned short *dest, unsigned short val, size_t count)
+typedef struct registers
 {
-	unsigned short *ret = (unsigned short*) dest;
-	while(count-- != 0)
-	{
-		*dest++ = val;
-	}
 
-	return ret;
-}
+    u32int ds;                  // Data segment selector
+    u32int edi, esi, ebp, esp, ebx, edx, ecx, eax; // Pushed by pusha.
+    u32int int_no, err_code;    // Interrupt number and error code (if applicable)
+    u32int eip, cs, eflags, useresp, ss; // Pushed by the processor automatically.
+
+} registers_t;
+
+// Enables registration of callbacks for interrupts or IRQs.
+// For IRQs, to ease confusion, use the #defines above as the
+// first parameter.
+
+typedef void (*isr_t)(registers_t*);
+void register_interrupt_handler(u8int n, isr_t handler);

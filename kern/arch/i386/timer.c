@@ -28,95 +28,50 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <Lunix/kernel/monitor.h>
-#include <Lunix/console.h>
-#include <Lunix/kernel/descriptor_tables.h>
 #include <Lunix/kernel/timer.h>
-#include <Lunix/kernel/paging.h>
-#include <Lunix/kernel/multiboot.h>
-#include <Lunix/kernel/fs.h>
-#include <Lunix/kernel/initrd.h>
-#include <Lunix/kernel/task.h>
-#include <Lunix/kernel/syscall.h>
-#include <Lunix/kernel/version.h>
+#include <Lunix/kernel/isr.h>
+#include <Lunix/kernel/monitor.h>
 
-void ls_initrd(void)
+u32int tick = 0;
+
+static void timer_callback(registers_t *regs)
 {
 
-    monitor_write("\nOpening the initrd...\n");
+    tick++;
 
-// Contents of /
-
-    int i = 0;
-    struct dirent *node = 0;
-
-    while ( (node = readdir_fs(fs_root, i)) != 0)
-    {
-
-    monitor_write(" > Found file ");
-    monitor_write(node->name);
-
-    fs_node_t *fsnode = finddir_fs(fs_root, node->name);
-
-    if ((fsnode->flags&0x7) == FS_DIRECTORY)
-    monitor_write(" (directory)\n");
-
-  i++;
-
-}
-
-}
-
-void ls_initrd_files(void)
-{
-
-    monitor_write("\nOpening the initrd files...\n");
+    switch_task();
     
-// Contents of /
-
-    int i = 0;
-    struct dirent *node = 0;
-
-    while ( (node = readdir_fs(fs_root, i)) != 0)
-    {
-
-    monitor_write("Found file ");
-    monitor_write(node->name);
-
-    fs_node_t *fsnode = finddir_fs(fs_root, node->name);
-
-    if ((fsnode->flags&0x7) == FS_DIRECTORY)
-    monitor_write(" (directory)\n");
-
-    else
-    {
-
-    monitor_write("\n\t contents: \"");
-
-    char buf[256];
-
-    u32int sz = read_fs(fsnode, 0, 256, buf);
-
-    int j;
-
-    for (j = 0; j < sz; j++)
-
-      monitor_put(buf[j]);
-
-    monitor_write("\"\n");
-
-  }
-
-  i++;
-
 }
 
-}
+void init_timer(u32int frequency)
+{
 
-void initialise_devices(void){
+    monitor_write("\nInitializing the timer...");
 
-  init_COM1(); // Serial port init
-  init_Parallel(); // Parallel port init
-  init_keyboard();
+    // Firstly, register our timer callback.
+
+    register_interrupt_handler(IRQ0, &timer_callback);
+
+    // The value we send to the PIT is the value to divide it's input clock
+    // (1193180 Hz) by, to get our required frequency. Important to note is
+    // that the divisor must be small enough to fit into 16-bits.
+
+    u32int divisor = 1193180 / frequency;
+
+    // Send the command byte.
+
+    outb(0x43, 0x36);
+
+    // Divisor has to be sent byte-wise, so split here into upper/lower bytes.
+
+    u8int l = (u8int)(divisor & 0xFF);
+    u8int h = (u8int)( (divisor>>8) & 0xFF );
+
+    // Send the frequency divisor.
+
+    outb(0x40, l);
+    outb(0x40, h);
+
+    monitor_write(" [done]");
 
 }

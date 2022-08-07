@@ -1,5 +1,4 @@
 /*
-Copyright (c) 2018, Carlos Fenollosa
 Copyright (c) 2022, Felipe Miguel Nery Lunkes
 All rights reserved.
 
@@ -29,35 +28,32 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <mem.h>
+#ifndef INITRD_H
+#define INITRD_H
 
-void memory_copy(uint8_t *source, uint8_t *dest, int nbytes) {
+#include "common.h"
+#include "fs.h"
 
-    int i;
-
-    for (i = 0; i < nbytes; i++) {
-
-        *(dest + i) = *(source + i);
-
-    }
-}
-
-void memory_set(uint8_t *dest, uint8_t val, uint32_t len) {
-
-    uint8_t *temp = (uint8_t *)dest;
-
-    for ( ; len != 0; len--) *temp++ = val;
-
-}
-
-
-unsigned short *memsetw(unsigned short *dest, unsigned short val, size_t count)
+typedef struct
 {
-	unsigned short *ret = (unsigned short*) dest;
-	while(count-- != 0)
-	{
-		*dest++ = val;
-	}
 
-	return ret;
-}
+    u32int nfiles; // The number of files in the ramdisk.
+
+} initrd_header_t;
+
+typedef struct
+{
+
+    u8int magic;     // Magic number, for error checking.
+    s8int name[64];  // Filename.
+    u32int offset;   // Offset in the initrd that the file starts.
+    u32int length;   // Length of the file.
+
+} initrd_file_header_t;
+
+// Initialises the initial ramdisk. It gets passed the address of the multiboot module,
+// and returns a completed filesystem node.
+
+fs_node_t *initialise_initrd(u32int location);
+
+#endif

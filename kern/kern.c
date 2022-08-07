@@ -40,83 +40,65 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <Lunix/kernel/syscall.h>
 #include <Lunix/kernel/version.h>
 
-void ls_initrd(void)
+extern u32int placement_address;
+u32int initial_esp;
+
+int main(struct multiboot *mboot_ptr, u32int initial_stack)
 {
 
-    monitor_write("\nOpening the initrd...\n");
+    initial_esp = initial_stack;
 
-// Contents of /
-
-    int i = 0;
-    struct dirent *node = 0;
-
-    while ( (node = readdir_fs(fs_root, i)) != 0)
-    {
-
-    monitor_write(" > Found file ");
-    monitor_write(node->name);
-
-    fs_node_t *fsnode = finddir_fs(fs_root, node->name);
-
-    if ((fsnode->flags&0x7) == FS_DIRECTORY)
-    monitor_write(" (directory)\n");
-
-  i++;
-
-}
-
-}
-
-void ls_initrd_files(void)
-{
-
-    monitor_write("\nOpening the initrd files...\n");
+    init_descriptor_tables();
     
-// Contents of /
+    monitor_clear();
 
-    int i = 0;
-    struct dirent *node = 0;
+    monitor_write("Lunix kernel version ");
+    monitor_write(LUNIX_VERSION);
+    monitor_write("\nCopyright (c) 2022 Felipe Miguel Nery Lunkes\n");
 
-    while ( (node = readdir_fs(fs_root, i)) != 0)
-    {
+    // Initialise the PIT to 100Hz
 
-    monitor_write("Found file ");
-    monitor_write(node->name);
+    enable();
 
-    fs_node_t *fsnode = finddir_fs(fs_root, node->name);
+    init_timer(50);
 
-    if ((fsnode->flags&0x7) == FS_DIRECTORY)
-    monitor_write(" (directory)\n");
+    // Find the location of our initial ramdisk.
+    
+    ASSERT(mboot_ptr->mods_count > 0);
 
-    else
-    {
+    u32int initrd_location = *((u32int*)mboot_ptr->mods_addr);
+    u32int initrd_end = *(u32int*)(mboot_ptr->mods_addr+4);
 
-    monitor_write("\n\t contents: \"");
+    // Don't trample our module with placement accesses, please!
 
-    char buf[256];
+    placement_address = initrd_end;
 
-    u32int sz = read_fs(fsnode, 0, 256, buf);
+    initialise_devices();
 
-    int j;
+    // Start paging.
 
-    for (j = 0; j < sz; j++)
+    initialise_paging();
 
-      monitor_put(buf[j]);
+    // Start multitasking.
 
-    monitor_write("\"\n");
+    initialise_tasking();
 
-  }
+    // Initialise the initial ramdisk, and set it as the filesystem root.
 
-  i++;
+    fs_root = initialise_initrd(initrd_location);
 
-}
+    initialise_syscalls();
 
-}
+    disable(); // The follow part is not reentrant!
+    
+    ls_initrd();
 
-void initialise_devices(void){
+    LXmonitor();
 
-  init_COM1(); // Serial port init
-  init_Parallel(); // Parallel port init
-  init_keyboard();
+    switch_to_user_mode();
+
+    syscall_monitor_write("\n\nHey, I'm here!\n");
+
+    return 0;
 
 }

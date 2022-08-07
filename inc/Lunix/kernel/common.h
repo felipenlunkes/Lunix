@@ -1,5 +1,4 @@
 /*
-Copyright (c) 2018, Carlos Fenollosa
 Copyright (c) 2022, Felipe Miguel Nery Lunkes
 All rights reserved.
 
@@ -29,35 +28,26 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <mem.h>
+#ifndef COMMON_H
+#define COMMON_H
 
-void memory_copy(uint8_t *source, uint8_t *dest, int nbytes) {
+// Some nice typedefs, to standardise sizes across platforms.
+// These typedefs are written for 32-bit X86.
+typedef unsigned int   u32int;
+typedef          int   s32int;
+typedef unsigned short u16int;
+typedef          short s16int;
+typedef unsigned char  u8int;
+typedef          char  s8int;
 
-    int i;
+void outb(u16int port, u8int value);
+u8int inb(u16int port);
+u16int inw(u16int port);
 
-    for (i = 0; i < nbytes; i++) {
+#define PANIC(msg) panic(msg, __FILE__, __LINE__);
+#define ASSERT(b) ((b) ? (void)0 : panic_assert(__FILE__, __LINE__, #b))
 
-        *(dest + i) = *(source + i);
+extern void panic(const char *message, const char *file, u32int line);
+extern void panic_assert(const char *file, u32int line, const char *desc);
 
-    }
-}
-
-void memory_set(uint8_t *dest, uint8_t val, uint32_t len) {
-
-    uint8_t *temp = (uint8_t *)dest;
-
-    for ( ; len != 0; len--) *temp++ = val;
-
-}
-
-
-unsigned short *memsetw(unsigned short *dest, unsigned short val, size_t count)
-{
-	unsigned short *ret = (unsigned short*) dest;
-	while(count-- != 0)
-	{
-		*dest++ = val;
-	}
-
-	return ret;
-}
+#endif // COMMON_H

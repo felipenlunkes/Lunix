@@ -1,4 +1,5 @@
 /*
+Copyright (c) 2018, Carlos Fenollosa
 Copyright (c) 2022, Felipe Miguel Nery Lunkes
 All rights reserved.
 
@@ -28,95 +29,110 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <Lunix/kernel/monitor.h>
+#include <Lunix/keyboard.h>
+#include <Lunix/ports.h>
+#include <Lunix/kernel/isr.h>
 #include <Lunix/console.h>
-#include <Lunix/kernel/descriptor_tables.h>
-#include <Lunix/kernel/timer.h>
-#include <Lunix/kernel/paging.h>
-#include <Lunix/kernel/multiboot.h>
-#include <Lunix/kernel/fs.h>
-#include <Lunix/kernel/initrd.h>
-#include <Lunix/kernel/task.h>
-#include <Lunix/kernel/syscall.h>
-#include <Lunix/kernel/version.h>
+#include <string.h>
+#include <function.h>
+#include <stdint.h>
+#include "keyboard.h"
 
-void ls_initrd(void)
-{
+#define BACKSPACE 0x0E
+#define ENTER 0x1C
 
-    monitor_write("\nOpening the initrd...\n");
+char letter;
 
-// Contents of /
+static char key_buffer[256];
 
-    int i = 0;
-    struct dirent *node = 0;
+#define SC_MAX 57
 
-    while ( (node = readdir_fs(fs_root, i)) != 0)
-    {
+char resolvChar(uint8_t byte){
 
-    monitor_write(" > Found file ");
-    monitor_write(node->name);
-
-    fs_node_t *fsnode = finddir_fs(fs_root, node->name);
-
-    if ((fsnode->flags&0x7) == FS_DIRECTORY)
-    monitor_write(" (directory)\n");
-
-  i++;
+    return sc_ascii[byte];
 
 }
 
-}
+uint8_t scanf(void) {
 
-void ls_initrd_files(void)
-{
+    unsigned char scan;
 
-    monitor_write("\nOpening the initrd files...\n");
-    
-// Contents of /
+    static uint8_t letter = 0;
 
-    int i = 0;
-    struct dirent *node = 0;
+    uint8_t keychar = port_byte_in(0x60); 
 
-    while ( (node = readdir_fs(fs_root, i)) != 0)
+    scan = keychar & 0x80;
+    keychar = keychar & 0x7f;
+
+    if (scan)
     {
 
-    monitor_write("Found file ");
-    monitor_write(node->name);
+        return letter = 0;
 
-    fs_node_t *fsnode = finddir_fs(fs_root, node->name);
+    }
 
-    if ((fsnode->flags&0x7) == FS_DIRECTORY)
-    monitor_write(" (directory)\n");
+    else if (keychar != letter)
+    {
+
+        return letter = keychar;
+
+    }
 
     else
     {
 
-    monitor_write("\n\t contents: \"");
+        return 0;
 
-    char buf[256];
-
-    u32int sz = read_fs(fsnode, 0, 256, buf);
-
-    int j;
-
-    for (j = 0; j < sz; j++)
-
-      monitor_put(buf[j]);
-
-    monitor_write("\"\n");
-
-  }
-
-  i++;
+    }
 
 }
 
+void keyboard_callback(registers_t *regs) {
+
+    /* The PIC leaves us the scancode in port 0x60 */
+
+    uint8_t scancode = port_byte_in(0x60);
+    
+    if (scancode > SC_MAX) return;
+
+    if (scancode == BACKSPACE) {
+
+        backspace(key_buffer);
+
+        kprint_backspace();
+
+    } else if (scancode == ENTER) {
+
+        monitor_write("\n");
+
+        //LXmonitor(key_buffer); /* kernel-controlled function */
+
+        key_buffer[0] = '\0';
+
+    } else {
+
+        letter = sc_ascii[(int)scancode];
+
+        /* Remember that monitor_write only accepts char[] */
+
+        char str[2] = {letter, '\0'};
+
+        //append(key_buffer, letter);
+
+        //monitor_write(str);
+
+    }
+
+    UNUSED(regs);
+
 }
 
-void initialise_devices(void){
+void init_keyboard() {
 
-  init_COM1(); // Serial port init
-  init_Parallel(); // Parallel port init
-  init_keyboard();
+   monitor_write("\nInitializing the keyboard...");
 
+   register_interrupt_handler(IRQ1, keyboard_callback); 
+   
+   monitor_write(" [done]");
+   
 }
