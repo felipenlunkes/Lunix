@@ -28,7 +28,8 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <Lunix/kernel/ordered_array.h>
+#include <Lunix/kernel/array.h>
+#include <Lunix/kernel/kernel.h>
 
 s8int standard_lessthan_predicate(type_t a, type_t b)
 {
@@ -42,7 +43,9 @@ ordered_array_t create_ordered_array(u32int max_size, lessthan_predicate_t less_
 
     ordered_array_t to_ret;
     to_ret.array = (void*)kmalloc(max_size*sizeof(type_t));
+
     memset(to_ret.array, 0, max_size*sizeof(type_t));
+
     to_ret.size = 0;
     to_ret.max_size = max_size;
     to_ret.less_than = less_than;
@@ -56,7 +59,9 @@ ordered_array_t place_ordered_array(void *addr, u32int max_size, lessthan_predic
 
     ordered_array_t to_ret;
     to_ret.array = (type_t*)addr;
+
     memset(to_ret.array, 0, max_size*sizeof(type_t));
+
     to_ret.size = 0;
     to_ret.max_size = max_size;
     to_ret.less_than = less_than;
@@ -81,9 +86,11 @@ void insert_ordered_array(type_t item, ordered_array_t *array)
 
     while (iterator < array->size && array->less_than(array->array[iterator], item))
         iterator++;
+
     if (iterator == array->size) // just add at the end of the array.
       
         array->array[array->size++] = item;
+
     else
     {
 

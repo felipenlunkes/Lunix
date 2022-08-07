@@ -28,17 +28,18 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <Lunix/kernel/monitor.h>>
+#include <Lunix/kernel/monitor.h>
+#include <Lunix/kernel/kernel.h>
+#include "Lunix/kernel/keyboard.h"
 #include <string.h>
 #include <mem.h>
-#include "Lunix/kernel/keyboard.h"
 #include <stdint.h>
 
 #define BUFFER 64
 
 void LXmonitor(void) {
 
-    char keybbuffer[BUFFER];
+  char keybbuffer[BUFFER];
 	int command = 0;
 	uint8_t letter;
 
@@ -49,7 +50,7 @@ void LXmonitor(void) {
     monitor_write("Lunix > ");
     
     while (1)
-	{
+	  {
 
 		while (letter = scanf())
 		{
@@ -59,7 +60,7 @@ void LXmonitor(void) {
 
             if (strcmp(keybbuffer, "PANIC") == 0) {
 
-            PANIC("the user forced a kernel panic. Reboot the device to continue...");
+            PANIC("the user forced a kernel panic. Reboot!");
 
             } else if (strcmp(keybbuffer, "KMALLOC") == 0) {
 

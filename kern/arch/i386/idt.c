@@ -29,7 +29,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include <Lunix/kernel/common.h>
-#include <Lunix/kernel/descriptor_tables.h>
+#include <Lunix/kernel/idt.h>
 #include <Lunix/kernel/isr.h>
 
 // Lets us access our ASM functions from our C code.

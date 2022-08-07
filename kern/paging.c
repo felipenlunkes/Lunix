@@ -30,6 +30,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <Lunix/kernel/paging.h>
 #include <Lunix/kernel/kheap.h>
+#include <Lunix/kernel/kernel.h>
 
 // The kernel's page directory
 
@@ -332,10 +333,10 @@ void page_fault(registers_t *regs)
 
     monitor_write("\nPage fault! (");
 
-    if (present) {monitor_write("present");}
-    if (rw) {monitor_write("read-only");}
-    if (us) {monitor_write("user-mode");}
-    if (reserved) {monitor_write("reserved");}
+    if (present) {monitor_write(" present ");}
+    if (rw) {monitor_write(" read-only ");}
+    if (us) {monitor_write(" user-mode ");}
+    if (reserved) {monitor_write(" reserved ");}
 
     monitor_write(") at 0x");
     monitor_write_hex(faulting_address);

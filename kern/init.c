@@ -30,7 +30,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <Lunix/kernel/monitor.h>
 #include <Lunix/console.h>
-#include <Lunix/kernel/descriptor_tables.h>
 #include <Lunix/kernel/timer.h>
 #include <Lunix/kernel/paging.h>
 #include <Lunix/kernel/multiboot.h>

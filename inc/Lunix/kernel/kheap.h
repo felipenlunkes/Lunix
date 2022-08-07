@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define KHEAP_H
 
 #include "common.h"
-#include "ordered_array.h"
+#include "array.h"
 
 #define KHEAP_START         0xC0000000
 #define KHEAP_INITIAL_SIZE  0x100000

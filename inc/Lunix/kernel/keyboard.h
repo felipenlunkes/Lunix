@@ -29,9 +29,11 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include "common.h"
+
 #define BACKSPACE 0x0E
 #define ENTER 0x1c
 
 void init_keyboard();
-uint8_t scanf();
-char resolvChar(uint8_t);
+u8int scanf();
+char resolvChar(u8int);

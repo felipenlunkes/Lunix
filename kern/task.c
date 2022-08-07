@@ -261,6 +261,7 @@ int fork()
     // Find the end of the ready queue...
 
     task_t *tmp_task = (task_t*)ready_queue;
+    
     while (tmp_task->next)
         tmp_task = tmp_task->next;
 

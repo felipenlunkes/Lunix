@@ -30,6 +30,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <Lunix/kernel/kheap.h>
 #include <Lunix/kernel/paging.h>
+#include <Lunix/kernel/kernel.h>
 
 // end is defined in the linker script.
 

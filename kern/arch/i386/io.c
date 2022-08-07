@@ -32,6 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <string.h>
 #include <mem.h>
 #include <Lunix/kernel/kernel.h>
+#include <Lunix/kernel/common.h>
 #include <Lunix/kernel/thread.h>
 #include <Lunix/ports.h>
 #include <stdint.h>
@@ -84,5 +85,34 @@ unsigned char inportb(unsigned short port)
 	asm volatile("inb %1,%0":"=a"(ret):"Nd"(port));
 
 	return ret;
+
+}
+
+// Write a byte out to the specified port.
+
+void outb(u16int port, u8int value)
+{
+
+    asm volatile ("outb %1, %0" : : "dN" (port), "a" (value));
+
+}
+
+u8int inb(u16int port)
+{
+
+    u8int ret;
+    asm volatile("inb %1, %0" : "=a" (ret) : "dN" (port));
+
+    return ret;
+
+}
+
+u16int inw(u16int port)
+{
+
+    u16int ret;
+    asm volatile ("inw %1, %0" : "=a" (ret) : "dN" (port));
+
+    return ret;
 
 }
