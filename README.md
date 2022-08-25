@@ -5,12 +5,13 @@
 <div align="center">
   
 ![](https://img.shields.io/github/license/felipenlunkes/Lunix.svg)
-![](https://img.shields.io/github/downloads/felipenlunkes/felipenlunkes/Lunix.svg)
+![](https://img.shields.io/github/downloads/felipenlunkes/Lunix.svg)
 ![](https://img.shields.io/github/stars/felipenlunkes/Lunix.svg)
 ![](https://img.shields.io/github/issues/felipenlunkes/Lunix.svg)
 ![](https://img.shields.io/github/issues-closed/felipenlunkes/Lunix.svg)
 ![](https://img.shields.io/github/issues-pr/felipenlunkes/Lunix.svg)
 ![](https://img.shields.io/github/issues-pr-closed/felipenlunkes/Lunix.svg)
+![](https://img.shields.io/github/downloads/felipenlunkes/Lunix.svg)
 ![](https://img.shields.io/github/release/felipenlunkes/Lunix.svg)
 
 </div>
