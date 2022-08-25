@@ -2,6 +2,21 @@
 <a href="https://github.com/felipenlunkes/lunix"><img height="150" src="https://github.com/felipenlunkes/Lunix/blob/main/Doc/header.gif"></a>&nbsp;&nbsp;
 </p>
 
+<div align="center">
+  
+![](https://img.shields.io/github/license/felipenlunkes/Lunix.svg)
+![](https://img.shields.io/github/downloads/felipenlunkes/hexagonix/Lunix.svg)
+![](https://img.shields.io/github/stars/felipenlunkes/Lunix.svg)
+![](https://img.shields.io/github/issues/felipenlunkes/Lunix.svg)
+![](https://img.shields.io/github/issues-closed/felipenlunkes/Lunix.svg)
+![](https://img.shields.io/github/issues-pr/felipenlunkes/Lunix.svg)
+![](https://img.shields.io/github/issues-pr-closed/felipenlunkes/Lunix.svg)
+![](https://img.shields.io/github/release/felipenlunkes/Lunix.svg)
+
+</div>
+  
+<hr>
+
 # Lunix OS
 
 <p align='center'>
