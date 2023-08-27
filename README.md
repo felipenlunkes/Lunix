@@ -44,7 +44,7 @@ The rudimentary foundation of Lunix OS was based on the great tutorials availabl
 You will need:
 
 ![gnu_bash](https://img.shields.io/badge/GNU%20Bash-4EAA25?style=for-the-badge&logo=GNU%20Bash&logoColor=white)
-![github](https://img.shields.io/badge/GitHub-8117EB?style=for-the-badge&logo=github&logoColor=white)
+![git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)
 ![qemu](https://img.shields.io/badge/Qemu-0A0A0A?style=for-the-badge&logo=qemu&logoColor=white)
 
 To build Lunix, you must build the cross-compiler tools. For that, you first need to install the dependencies to build gcc, binutils and the system.
